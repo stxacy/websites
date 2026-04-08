@@ -219,6 +219,7 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(72px, 11vw, 140px);
       line-height: 0.92; letter-spacing: 3px;
+      color: #F5F0EE;
       animation: fadeUp 0.8s 0.1s ease both;
     }
     .hero-title .line-accent { color: var(--teal-lt); }
@@ -226,7 +227,7 @@
 
     .hero-subtitle {
       margin-top: 28px; font-size: clamp(16px, 1.9vw, 19px);
-      color: var(--muted); max-width: 560px; line-height: 1.75;
+      color: rgba(245,240,238,0.75); max-width: 560px; line-height: 1.75;
       animation: fadeUp 0.8s 0.2s ease both;
     }
 
@@ -257,7 +258,7 @@
     .hero-stats {
       display: flex; gap: 48px; flex-wrap: wrap;
       margin-top: 64px; padding-top: 40px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(245,240,238,0.2);
       animation: fadeUp 0.8s 0.4s ease both;
     }
     .stat-num {
@@ -266,19 +267,19 @@
     }
     .stat-label {
       font-size: 12px; letter-spacing: 1px;
-      text-transform: uppercase; color: var(--muted); margin-top: 4px;
+      text-transform: uppercase; color: rgba(245,240,238,0.6); margin-top: 4px;
     }
 
     .scroll-hint {
       position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center;
-      gap: 8px; color: var(--muted); font-size: 11px;
+      gap: 8px; color: rgba(245,240,238,0.5); font-size: 11px;
       letter-spacing: 1.5px; text-transform: uppercase;
       animation: fadeIn 1.2s 1s ease both;
     }
     .scroll-hint .arrow {
       width: 20px; height: 20px;
-      border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+      border-right: 2px solid rgba(245,240,238,0.5); border-bottom: 2px solid rgba(245,240,238,0.5);
       transform: rotate(45deg); animation: bounce 1.8s infinite;
     }
     @keyframes bounce {
