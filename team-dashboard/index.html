@@ -3,88 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Ai — Team Dashboard</title>
+  <title>Spec Ops — Team Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     /* ═══════════════════════════════════════════════════════════════════
-       LAYER 1 — PRIMITIVE TOKENS
+       DESIGN TOKENS
        ═══════════════════════════════════════════════════════════════════ */
     :root {
-      /* Colours */
-      --primitive-blue-500:   #3B82F6;
-      --primitive-green-500:  #22C55E;
-      --primitive-purple-500: #A855F7;
-      --primitive-orange-500: #F97316;
-      --primitive-teal-500:   #14B8A6;
-      --primitive-slate-950:  #020617;
-      --primitive-slate-900:  #0F172A;
-      --primitive-slate-800:  #1E293B;
-      --primitive-slate-700:  #334155;
-      --primitive-slate-500:  #64748B;
-      --primitive-slate-300:  #CBD5E1;
-      --primitive-slate-100:  #F1F5F9;
-      --primitive-white:      #FFFFFF;
+      /* Palette — warm dark editorial */
+      --ink:          #0E0D0A;   /* near-black with warmth */
+      --ink-deep:     #080806;   /* darkest surface */
+      --surface:      #161410;   /* card background */
+      --surface-lift: #1E1B14;   /* raised surface */
+      --rule:         #2C2820;   /* borders / rules */
+      --rule-warm:    #3A3328;   /* slightly lighter rule */
+      --gold:         #C8A84B;   /* primary accent — warm gold */
+      --gold-muted:   #8A7033;   /* secondary gold */
+      --gold-dim:     rgba(200,168,75,0.15); /* tinted wash */
+      --gold-line:    rgba(200,168,75,0.35); /* connector lines */
 
-      /* Spacing scale — 4pt base */
-      --space-1:  4px;
-      --space-2:  8px;
-      --space-3:  12px;
-      --space-4:  16px;
-      --space-5:  20px;
-      --space-6:  24px;
-      --space-8:  32px;
-      --space-10: 40px;
-      --space-12: 48px;
+      /* Text */
+      --text-primary:   #E8E0D0;   /* main — warm off-white */
+      --text-secondary: #9A917E;   /* secondary — warm grey */
+      --text-muted:     #5C5446;   /* muted — dark warm */
+      --text-gold:      #C8A84B;   /* gold accent text */
 
-      /* Radii */
-      --radius-sm:   6px;
-      --radius-md:   10px;
-      --radius-lg:   16px;
-      --radius-full: 9999px;
+      /* Status colours — desaturated, tasteful */
+      --status-active:  #7BA87A;   /* muted sage green */
+      --status-running: #6B8FBF;   /* muted steel blue */
+      --status-idle:    #6B6258;   /* warm grey */
 
-      /* Typography scale */
-      --text-xs:   11px;
-      --text-sm:   13px;
+      /* Typography */
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+      --font-mono:    'DM Mono', 'Courier New', monospace;
+
+      /* Scale */
+      --text-2xs: 10px;
+      --text-xs:  12px;
+      --text-sm:  13px;
       --text-base: 15px;
-      --text-lg:   18px;
-      --text-xl:   22px;
-      --text-2xl:  28px;
-      --text-3xl:  36px;
-    }
+      --text-lg:  18px;
+      --text-xl:  22px;
+      --text-2xl: 28px;
+      --text-3xl: 38px;
+      --text-4xl: 52px;
 
-    /* ═══════════════════════════════════════════════════════════════════
-       LAYER 2 — SEMANTIC TOKENS
-       ═══════════════════════════════════════════════════════════════════ */
-    :root {
-      --color-bg:             var(--primitive-slate-950);
-      --color-surface:        var(--primitive-slate-900);
-      --color-surface-raised: var(--primitive-slate-800);
-      --color-border:         var(--primitive-slate-700);
-      --color-border-subtle:  rgba(255,255,255,0.06);
-      --color-text-primary:   var(--primitive-slate-100);
-      --color-text-secondary: var(--primitive-slate-500);
-      --color-text-muted:     rgba(255,255,255,0.35);
-      --color-status-active:  var(--primitive-green-500);
-      --color-status-running: var(--primitive-blue-500);
-      --color-status-idle:    var(--primitive-slate-500);
-    }
+      /* Space — 4pt base */
+      --sp-1: 4px;
+      --sp-2: 8px;
+      --sp-3: 12px;
+      --sp-4: 16px;
+      --sp-5: 20px;
+      --sp-6: 24px;
+      --sp-8: 32px;
+      --sp-10: 40px;
+      --sp-12: 48px;
+      --sp-16: 64px;
 
-    /* ═══════════════════════════════════════════════════════════════════
-       LAYER 3 — COMPONENT TOKENS
-       ═══════════════════════════════════════════════════════════════════ */
-    :root {
-      --card-bg:         var(--color-surface);
-      --card-border:     var(--color-border-subtle);
-      --card-radius:     var(--radius-lg);
-      --card-padding:    var(--space-6);
-      --badge-radius:    var(--radius-full);
-      --badge-padding:   3px 10px;
-      --progress-height: 6px;
-      --progress-radius: var(--radius-full);
-      --stat-bg:         var(--color-surface);
-      --stat-border:     var(--color-border-subtle);
+      /* Shape */
+      --r-sm:  4px;
+      --r-md:  6px;
+      --r-lg:  10px;
     }
 
     /* ═══════════════════════════════════════════════════════════════════
@@ -96,215 +78,179 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background-color: var(--color-bg);
-      color: var(--color-text-primary);
+      font-family: var(--font-body);
+      background-color: var(--ink);
+      color: var(--text-primary);
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Subtle grid texture on background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(59,130,246,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(59,130,246,0.025) 1px, transparent 1px);
-      background-size: 48px 48px;
-      pointer-events: none;
-      z-index: 0;
     }
 
     /* ═══════════════════════════════════════════════════════════════════
        PAGE WRAPPER
        ═══════════════════════════════════════════════════════════════════ */
     .page-wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 1400px;
+      max-width: 1320px;
       margin: 0 auto;
-      padding: 0 var(--space-6) 80px;
+      padding: 0 var(--sp-6) var(--sp-16);
     }
 
     /* ═══════════════════════════════════════════════════════════════════
        HEADER
        ═══════════════════════════════════════════════════════════════════ */
     .site-header {
-      padding: var(--space-8) 0 var(--space-8);
-      border-bottom: 1px solid var(--color-border-subtle);
-      margin-bottom: var(--space-8);
+      padding: var(--sp-10) 0 var(--sp-8);
+      margin-bottom: var(--sp-8);
+      border-bottom: 1px solid var(--rule);
       display: flex;
-      align-items: flex-start;
+      align-items: flex-end;
       justify-content: space-between;
-      gap: var(--space-6);
+      gap: var(--sp-6);
       flex-wrap: wrap;
     }
 
     .header-left {
       display: flex;
       flex-direction: column;
-      gap: var(--space-2);
+      gap: var(--sp-2);
     }
 
     .header-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
+      font-family: var(--font-body);
       font-size: var(--text-xs);
-      font-weight: 600;
-      letter-spacing: 0.1em;
+      font-weight: 500;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
+      color: var(--text-gold);
     }
 
     .header-title {
-      font-size: var(--text-2xl);
+      font-family: var(--font-display);
+      font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
       font-weight: 700;
-      letter-spacing: -0.025em;
-      color: var(--color-text-primary);
-      line-height: 1.15;
+      color: var(--text-primary);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
     }
 
     .header-subtitle {
+      font-family: var(--font-body);
       font-size: var(--text-sm);
       font-weight: 300;
-      color: var(--color-text-secondary);
-      margin-top: var(--space-1);
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-top: var(--sp-1);
     }
 
     .header-right {
       display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      flex-shrink: 0;
-      padding-top: 4px;
-    }
-
-    /* Live pulse dot */
-    .live-dot {
-      position: relative;
-      width: 8px;
-      height: 8px;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: var(--sp-2);
       flex-shrink: 0;
     }
 
-    .live-dot::before,
-    .live-dot::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: var(--color-status-active);
-    }
-
-    .live-dot::after {
-      animation: status-pulse 1.5s ease-out infinite;
-    }
-
-    @keyframes status-pulse {
-      0%   { transform: scale(1);   opacity: 1; }
-      100% { transform: scale(2.5); opacity: 0; }
-    }
-
-    .date-badge {
+    .live-tag {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-2);
-      font-family: 'Inter', sans-serif;
-      font-size: var(--text-sm);
+      gap: var(--sp-2);
+      font-size: var(--text-2xs);
       font-weight: 500;
-      color: var(--color-text-secondary);
-      background: var(--color-surface);
-      border: 1px solid var(--color-border-subtle);
-      border-radius: var(--badge-radius);
-      padding: var(--space-2) var(--space-4);
-      white-space: nowrap;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--status-active);
+      border: 1px solid rgba(123,168,122,0.3);
+      border-radius: 2px;
+      padding: 3px var(--sp-2);
+    }
+
+    .live-tag::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--status-active);
+      flex-shrink: 0;
+    }
+
+    .date-text {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
     }
 
     /* ═══════════════════════════════════════════════════════════════════
-       STAT CARDS (header summary row)
+       STAT ROW
        ═══════════════════════════════════════════════════════════════════ */
     .stat-row {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: var(--space-4);
-      margin-bottom: var(--space-8);
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      margin-bottom: var(--sp-10);
     }
 
     .stat-card {
-      background: var(--stat-bg);
-      border: 1px solid var(--stat-border);
-      border-left: 3px solid var(--primitive-blue-500);
-      border-radius: var(--radius-lg);
-      padding: var(--space-5);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-card::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(59,130,246,0.4), transparent);
+      background: var(--surface);
+      padding: var(--sp-6) var(--sp-6) var(--sp-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-1);
     }
 
     .stat-label {
       font-size: var(--text-xs);
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--color-text-secondary);
-      margin-bottom: var(--space-2);
+      color: var(--text-muted);
     }
 
     .stat-value {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-display);
       font-size: var(--text-3xl);
-      font-weight: 700;
-      color: var(--color-text-primary);
+      font-weight: 600;
+      color: var(--text-primary);
       line-height: 1;
       letter-spacing: -0.02em;
     }
 
     .stat-meta {
       font-size: var(--text-xs);
-      color: var(--color-text-muted);
-      margin-top: var(--space-1);
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: var(--sp-1);
     }
 
     /* ═══════════════════════════════════════════════════════════════════
        SECTION HEADING
        ═══════════════════════════════════════════════════════════════════ */
     .section-heading {
+      font-family: var(--font-body);
       font-size: var(--text-xs);
-      font-weight: 600;
-      letter-spacing: 0.1em;
+      font-weight: 500;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-5);
-      padding-bottom: var(--space-3);
-      border-bottom: 1px solid var(--color-border-subtle);
+      color: var(--text-muted);
+      margin-bottom: var(--sp-5);
       display: flex;
       align-items: center;
-      gap: var(--space-3);
+      gap: var(--sp-4);
     }
 
     .section-heading::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, var(--color-border-subtle), transparent);
+      background: var(--rule);
     }
 
     /* ═══════════════════════════════════════════════════════════════════
@@ -312,26 +258,28 @@
        ═══════════════════════════════════════════════════════════════════ */
     .agent-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: var(--space-5);
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: var(--sp-4);
     }
 
     /* ═══════════════════════════════════════════════════════════════════
-       AGENT CARD
+       AGENT CARD — dossier file aesthetic
        ═══════════════════════════════════════════════════════════════════ */
     .agent-card {
-      --agent-color: var(--primitive-blue-500);
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: var(--card-radius);
+      --agent-color: var(--gold);
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--agent-color);
+      border-radius: var(--r-md);
       display: flex;
       flex-direction: column;
       overflow: hidden;
       position: relative;
-      transition: transform 200ms ease-out, box-shadow 200ms ease-out, border-color 200ms ease-out;
-      /* Card entrance: start hidden, animate in via JS-added class */
+      transition: border-color 180ms ease-out, background 180ms ease-out;
+
+      /* Card entrance */
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(14px);
     }
 
     .agent-card.is-visible {
@@ -339,65 +287,106 @@
       transform: translateY(0);
     }
 
-    /* Top accent strip */
-    .agent-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--agent-color);
-      border-radius: var(--card-radius) var(--card-radius) 0 0;
-      z-index: 1;
-    }
+    /* Per-agent border colours */
+    .agent-card[data-agent="max"]    { --agent-color: #C8A84B; }
+    .agent-card[data-agent="daryl"]  { --agent-color: #6B8FBF; }
+    .agent-card[data-agent="steven"] { --agent-color: #7BA87A; }
+    .agent-card[data-agent="cody"]   { --agent-color: #9B7EC8; }
+    .agent-card[data-agent="debbie"] { --agent-color: #C87B5A; }
+    .agent-card[data-agent="pat"]    { --agent-color: #5AA8A0; }
+    .agent-card[data-agent="carl"]   { --agent-color: #BF6B8E; }
 
-    /* Per-agent colour tokens */
-    .agent-card[data-agent="daryl"]  { --agent-color: #3B82F6; }
-    .agent-card[data-agent="steven"] { --agent-color: #22C55E; }
-    .agent-card[data-agent="cody"]   { --agent-color: #A855F7; }
-    .agent-card[data-agent="debbie"] { --agent-color: #F97316; }
-    .agent-card[data-agent="pat"]    { --agent-color: #14B8A6; }
+    /* Max — full-width commander card */
+    .agent-card[data-agent="max"] {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: stretch;
+    }
 
     .agent-card:hover {
-      transform: translateY(-3px);
-      border-color: color-mix(in srgb, var(--agent-color) 40%, transparent);
-      box-shadow:
-        0 8px 32px color-mix(in srgb, var(--agent-color) 20%, transparent),
-        0 2px 8px rgba(0,0,0,0.4);
+      background: var(--surface-lift);
+      border-color: var(--agent-color);
     }
 
-    /* Focus ring for keyboard navigation */
     .agent-card:focus-within {
       outline: 2px solid var(--agent-color);
       outline-offset: 2px;
     }
 
-    /* ── Card Header ── */
-    .card-header {
-      padding: var(--space-5) var(--space-6) var(--space-4);
-      padding-top: calc(var(--space-5) + 3px); /* account for accent strip */
+    /* ── Commander panel (Max's left column) ── */
+    .commander-panel {
+      flex-shrink: 0;
+      width: 240px;
+      padding: var(--sp-8) var(--sp-6);
+      border-right: 1px solid var(--rule);
       display: flex;
-      align-items: flex-start;
-      gap: var(--space-3);
-      border-bottom: 1px solid var(--color-border-subtle);
+      flex-direction: column;
+      justify-content: space-between;
+      background: rgba(200,168,75,0.04);
     }
 
-    /* Avatar */
+    .commander-initial {
+      font-family: var(--font-display);
+      font-size: 88px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(200,168,75,0.12);
+      letter-spacing: -0.04em;
+      user-select: none;
+      aria-hidden: true;
+    }
+
+    .commander-id-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .commander-id-label {
+      font-size: var(--text-2xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .commander-id-name {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+
+    .commander-id-role {
+      font-size: var(--text-sm);
+      font-weight: 300;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    /* ── Standard card header ── */
+    .card-header {
+      padding: var(--sp-5) var(--sp-5) var(--sp-4);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-3);
+      border-bottom: 1px solid var(--rule);
+    }
+
     .agent-avatar {
-      width: 42px;
-      height: 42px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Inter', sans-serif;
-      font-size: var(--text-lg);
+      font-family: var(--font-display);
+      font-size: var(--text-base);
       font-weight: 600;
       color: var(--agent-color);
-      background: color-mix(in srgb, var(--agent-color) 15%, transparent);
-      letter-spacing: 0;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--rule-warm);
     }
 
     .agent-info {
@@ -406,112 +395,76 @@
     }
 
     .agent-name {
-      font-size: var(--text-base);
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
       font-weight: 600;
-      color: var(--color-text-primary);
+      color: var(--text-primary);
       line-height: 1.2;
     }
 
     .agent-role {
       font-size: var(--text-xs);
-      font-weight: 400;
-      color: var(--color-text-secondary);
-      margin-top: 3px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      font-style: italic;
     }
 
-    /* ── Status badges ── */
-    .status-badge {
+    /* ── Status pill — no pulsing, just clear typography ── */
+    .status-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-family: 'Inter', sans-serif;
-      font-size: var(--text-xs);
+      font-size: var(--text-2xs);
       font-weight: 500;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: var(--badge-padding);
-      border-radius: var(--badge-radius);
+      padding: 3px 8px;
+      border-radius: 2px;
       border: 1px solid transparent;
       flex-shrink: 0;
-      line-height: 1.8;
+      white-space: nowrap;
     }
 
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      position: relative;
+    .status-pill--active {
+      color: var(--status-active);
+      border-color: rgba(123,168,122,0.3);
+      background: rgba(123,168,122,0.08);
     }
 
-    /* Active */
-    .status-badge--active {
-      color: var(--color-status-active);
-      background: color-mix(in srgb, var(--color-status-active) 15%, transparent);
-      border-color: color-mix(in srgb, var(--color-status-active) 25%, transparent);
-    }
-    .status-badge--active .status-dot {
-      background: var(--color-status-active);
-    }
-    .status-badge--active .status-dot::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: var(--color-status-active);
-      animation: dot-pulse 1.5s ease-out infinite;
+    .status-pill--running {
+      color: var(--status-running);
+      border-color: rgba(107,143,191,0.3);
+      background: rgba(107,143,191,0.08);
     }
 
-    /* Running */
-    .status-badge--running {
-      color: var(--color-status-running);
-      background: color-mix(in srgb, var(--color-status-running) 15%, transparent);
-      border-color: color-mix(in srgb, var(--color-status-running) 25%, transparent);
-    }
-    .status-badge--running .status-dot {
-      background: var(--color-status-running);
-    }
-    .status-badge--running .status-dot::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: var(--color-status-running);
-      animation: dot-pulse 1s ease-out infinite;
-    }
-
-    /* Idle */
-    .status-badge--idle {
-      color: var(--color-status-idle);
-      background: color-mix(in srgb, var(--color-status-idle) 15%, transparent);
-      border-color: color-mix(in srgb, var(--color-status-idle) 20%, transparent);
-    }
-    .status-badge--idle .status-dot {
-      background: var(--color-status-idle);
-    }
-
-    @keyframes dot-pulse {
-      0%   { transform: scale(1);   opacity: 1; }
-      100% { transform: scale(2.5); opacity: 0; }
+    .status-pill--idle {
+      color: var(--status-idle);
+      border-color: rgba(107,98,88,0.3);
+      background: rgba(107,98,88,0.06);
     }
 
     /* ── Card Body ── */
     .card-body {
-      padding: var(--space-5) var(--space-6);
+      padding: var(--sp-5);
       display: flex;
       flex-direction: column;
-      gap: var(--space-5);
+      gap: var(--sp-5);
       flex: 1;
+    }
+
+    /* Commander body fills remaining space */
+    .agent-card[data-agent="max"] .card-body {
+      padding: var(--sp-8) var(--sp-6);
     }
 
     /* ── Section label inside card ── */
     .card-section-label {
-      font-size: var(--text-xs);
+      font-size: var(--text-2xs);
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-3);
+      color: var(--text-muted);
+      margin-bottom: var(--sp-3);
     }
 
     /* ── Task list ── */
@@ -519,140 +472,370 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
 
     .task-item {
       display: flex;
       align-items: flex-start;
-      gap: var(--space-2);
-      font-family: 'Inter', sans-serif;
+      gap: var(--sp-2);
       font-size: var(--text-sm);
       font-weight: 400;
-      color: var(--primitive-slate-300);
+      color: var(--text-secondary);
       line-height: 1.45;
     }
 
-    .task-icon {
+    .task-marker {
       flex-shrink: 0;
-      margin-top: 2px;
-      color: var(--agent-color);
+      margin-top: 5px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--agent-color);
+      opacity: 0.7;
     }
 
-    /* ── Token usage section ── */
+    /* ── Token usage ── */
     .tokens-top {
       display: flex;
       align-items: baseline;
-      justify-content: space-between;
-      gap: var(--space-2);
-      margin-bottom: var(--space-3);
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-3);
     }
 
     .tokens-count {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: var(--text-xl);
-      font-weight: 600;
-      color: var(--color-text-primary);
+      font-weight: 500;
+      color: var(--text-primary);
       line-height: 1;
       letter-spacing: -0.01em;
     }
 
     .tokens-label {
       font-size: var(--text-xs);
-      color: var(--color-text-muted);
-      font-weight: 400;
-      align-self: center;
+      color: var(--text-muted);
+      font-weight: 300;
     }
 
     .tokens-pct {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: var(--text-sm);
-      font-weight: 400;
-      color: var(--color-text-secondary);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
       margin-left: auto;
     }
 
-    /* Progress bar */
+    /* Progress bar — thin ruled line */
     .progress-track {
-      height: var(--progress-height);
-      background: var(--primitive-slate-800);
-      border-radius: var(--progress-radius);
+      height: 2px;
+      background: var(--rule-warm);
+      border-radius: 1px;
       overflow: hidden;
     }
 
     .progress-fill {
       height: 100%;
-      border-radius: var(--progress-radius);
-      background: linear-gradient(
-        90deg,
-        var(--agent-color) 0%,
-        color-mix(in srgb, var(--agent-color) 60%, var(--primitive-white)) 100%
-      );
+      border-radius: 1px;
+      background: var(--agent-color);
       width: 0%;
-      transition: width 300ms ease-out;
+      transition: width 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       COMMAND STRUCTURE MAP — org chart
+       ═══════════════════════════════════════════════════════════════════ */
+    .command-section {
+      margin-top: var(--sp-12);
+      margin-bottom: var(--sp-8);
+    }
+
+    .org-chart {
+      padding: var(--sp-10) var(--sp-6);
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-md);
+      overflow-x: auto;
+    }
+
+    /* Tree layout — same structure, restyled */
+    .tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .tree-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Connector lines — dashed gold */
+    .tree-stem {
+      width: 1px;
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--gold-line) 0,
+        var(--gold-line) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+      flex-shrink: 0;
+    }
+
+    .tree-stem--down { height: 32px; }
+    .tree-stem--up   { height: 32px; }
+
+    .tree-row {
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .tree-row::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: repeating-linear-gradient(
+        to right,
+        var(--gold-line) 0,
+        var(--gold-line) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+    }
+
+    .tree-branch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 var(--sp-5);
+    }
+
+    .tree-subgroup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tree-subrow {
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .tree-subrow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: repeating-linear-gradient(
+        to right,
+        var(--gold-line) 0,
+        var(--gold-line) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+    }
+
+    .tree-subbranch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 var(--sp-3);
+    }
+
+    /* Org card — compact dossier tag */
+    .org-card {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-3) var(--sp-4);
+      background: var(--surface-lift);
+      border: 1px solid var(--rule-warm);
+      border-left: 2px solid var(--node-color, var(--gold));
+      border-radius: var(--r-sm);
+      white-space: nowrap;
+      transition: background 160ms ease-out;
+    }
+
+    .org-card:hover {
+      background: rgba(200,168,75,0.05);
+    }
+
+    .org-card--commander {
+      padding: var(--sp-4) var(--sp-5);
+      border-left-width: 3px;
+      background: rgba(200,168,75,0.06);
+    }
+
+    .org-node-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--node-color, var(--gold));
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--rule-warm);
+      flex-shrink: 0;
+    }
+
+    .org-node-avatar--lg {
+      width: 38px;
+      height: 38px;
+      font-size: var(--text-base);
+    }
+
+    .org-node-name {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .org-node-role {
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-top: 1px;
+    }
+
+    /* Node colour tokens */
+    .org-card[data-node="max"],
+    .org-node-avatar[data-node="max"]    { --node-color: #C8A84B; }
+    .org-card[data-node="daryl"],
+    .org-node-avatar[data-node="daryl"]  { --node-color: #6B8FBF; }
+    .org-card[data-node="steven"],
+    .org-node-avatar[data-node="steven"] { --node-color: #7BA87A; }
+    .org-card[data-node="pat"],
+    .org-node-avatar[data-node="pat"]    { --node-color: #5AA8A0; }
+    .org-card[data-node="carl"],
+    .org-node-avatar[data-node="carl"]   { --node-color: #BF6B8E; }
+    .org-card[data-node="cody"],
+    .org-node-avatar[data-node="cody"]   { --node-color: #9B7EC8; }
+    .org-card[data-node="debbie"],
+    .org-node-avatar[data-node="debbie"] { --node-color: #C87B5A; }
+
+    /* Legend */
+    .org-legend {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-6);
+      flex-wrap: wrap;
+      margin-top: var(--sp-8);
+      padding-top: var(--sp-5);
+      border-top: 1px solid var(--rule);
+    }
+
+    .org-legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+
+    .org-legend-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
     /* ═══════════════════════════════════════════════════════════════════
        FOOTER
        ═══════════════════════════════════════════════════════════════════ */
     .site-footer {
-      margin-top: var(--space-12);
-      padding-top: var(--space-5);
-      border-top: 1px solid var(--color-border-subtle);
+      margin-top: var(--sp-12);
+      padding-top: var(--sp-5);
+      border-top: 1px solid var(--rule);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: var(--space-3);
+      gap: var(--sp-3);
     }
 
     .footer-note {
       font-size: var(--text-xs);
-      font-weight: 400;
-      color: var(--color-text-muted);
+      font-weight: 300;
+      color: var(--text-muted);
       font-style: italic;
     }
 
     .footer-brand {
-      font-size: var(--text-xs);
-      font-weight: 500;
-      color: var(--color-text-muted);
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
     }
 
     /* ═══════════════════════════════════════════════════════════════════
        RESPONSIVE
        ═══════════════════════════════════════════════════════════════════ */
+    @media (max-width: 800px) {
+      .agent-card[data-agent="max"] {
+        flex-direction: column;
+      }
+
+      .commander-panel {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+        padding: var(--sp-6) var(--sp-5);
+        flex-direction: row;
+        align-items: center;
+        gap: var(--sp-5);
+      }
+
+      .commander-initial {
+        font-size: 56px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .tree-branch,
+      .tree-subbranch {
+        padding: 0 var(--sp-2);
+      }
+      .org-node-role { display: none; }
+      .org-node-avatar { width: 24px; height: 24px; font-size: var(--text-xs); }
+      .org-node-name { font-size: var(--text-xs); }
+      .org-card { padding: var(--sp-2) var(--sp-3); gap: var(--sp-2); }
+    }
+
     @media (max-width: 640px) {
       .page-wrapper {
-        padding: 0 var(--space-4) 60px;
+        padding: 0 var(--sp-4) var(--sp-10);
       }
       .site-header {
         flex-direction: column;
-        gap: var(--space-4);
-        padding: var(--space-6) 0;
+        align-items: flex-start;
+        gap: var(--sp-4);
+        padding: var(--sp-8) 0 var(--sp-6);
       }
       .header-right {
         align-items: flex-start;
       }
       .stat-row {
         grid-template-columns: 1fr;
-        gap: var(--space-3);
-      }
-      .stat-value {
-        font-size: var(--text-2xl);
+        gap: 1px;
       }
       .agent-grid {
         grid-template-columns: 1fr;
-        gap: var(--space-4);
-      }
-    }
-
-    @media (max-width: 420px) {
-      .card-header {
-        flex-wrap: wrap;
-      }
-      .status-badge {
-        margin-top: var(--space-1);
       }
     }
 
@@ -660,9 +843,7 @@
        REDUCED MOTION — ACCESSIBILITY
        ═══════════════════════════════════════════════════════════════════ */
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -681,26 +862,24 @@
 
 <div class="page-wrapper">
 
-  <!-- ═══════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════
        HEADER
-       ═══════════════════════════════════════════════════════ -->
+       ══════════════════════════════════════════ -->
   <header class="site-header" role="banner">
     <div class="header-left">
-      <div class="header-eyebrow" aria-hidden="true">
-        Live Operations
-      </div>
-      <h1 class="header-title">Project Ai — Team Dashboard</h1>
-      <p class="header-subtitle">Agent Activity</p>
+      <div class="header-eyebrow">Live Operations</div>
+      <h1 class="header-title">Spec&thinsp;Ops</h1>
+      <p class="header-subtitle">Team Dashboard — Agent Activity</p>
     </div>
     <div class="header-right">
-      <div class="live-dot" aria-hidden="true" title="Live data"></div>
-      <div class="date-badge" id="date-badge" aria-label="Current date">—</div>
+      <span class="live-tag">Live</span>
+      <span class="date-text" id="date-badge" aria-label="Current date">—</span>
     </div>
   </header>
 
-  <!-- ═══════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════
        SUMMARY STAT CARDS
-       ═══════════════════════════════════════════════════════ -->
+       ══════════════════════════════════════════ -->
   <div class="stat-row" role="region" aria-label="Session summary">
     <div class="stat-card">
       <div class="stat-label">Total Tokens</div>
@@ -710,7 +889,7 @@
     <div class="stat-card">
       <div class="stat-label">Active Agents</div>
       <div class="stat-value" id="total-agents">—</div>
-      <div class="stat-meta" id="total-agents-meta">Of 5 available</div>
+      <div class="stat-meta" id="total-agents-meta">Of 7 available</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Tasks Completed</div>
@@ -719,9 +898,9 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════
        AGENT GRID
-       ═══════════════════════════════════════════════════════ -->
+       ══════════════════════════════════════════ -->
   <main>
     <h2 class="section-heading">Agent Status</h2>
 
@@ -730,20 +909,152 @@
     </div>
   </main>
 
-  <!-- ═══════════════════════════════════════════════════════
+  <!-- ══════════════════════════════════════════
+       COMMAND STRUCTURE MAP
+       ══════════════════════════════════════════ -->
+  <section class="command-section" aria-label="Command Structure">
+    <h2 class="section-heading">Command Structure</h2>
+
+    <div class="org-chart" role="img" aria-label="Agent hierarchy diagram">
+
+      <!-- MAX — root node -->
+      <div class="tree">
+        <div class="tree-node">
+          <div class="org-card org-card--commander" data-node="max">
+            <div class="org-node-avatar org-node-avatar--lg" data-node="max">M</div>
+            <div>
+              <div class="org-node-name">Max</div>
+              <div class="org-node-role">Mission Commander · Orchestrator</div>
+            </div>
+          </div>
+          <div class="tree-stem tree-stem--down"></div>
+        </div>
+
+        <!-- Level 1 children row -->
+        <div class="tree-row" style="padding-top: 0;">
+          <!-- Daryl branch -->
+          <div class="tree-branch">
+            <div class="tree-stem tree-stem--up"></div>
+            <div class="org-card" data-node="daryl">
+              <div class="org-node-avatar" data-node="daryl">D</div>
+              <div>
+                <div class="org-node-name">Daryl</div>
+                <div class="org-node-role">Project Manager</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Steven branch — has sub-children -->
+          <div class="tree-branch">
+            <div class="tree-stem tree-stem--up"></div>
+            <div class="tree-subgroup">
+              <div class="org-card" data-node="steven">
+                <div class="org-node-avatar" data-node="steven">S</div>
+                <div>
+                  <div class="org-node-name">Steven</div>
+                  <div class="org-node-role">Web Builder · Pipeline Lead</div>
+                </div>
+              </div>
+              <div class="tree-stem tree-stem--down"></div>
+
+              <!-- Steven's sub-agents -->
+              <div class="tree-subrow" style="padding-top: 0;">
+                <div class="tree-subbranch">
+                  <div class="tree-stem tree-stem--up"></div>
+                  <div class="org-card" data-node="carl">
+                    <div class="org-node-avatar" data-node="carl">C</div>
+                    <div>
+                      <div class="org-node-name">Carl</div>
+                      <div class="org-node-role">CSS Expert</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tree-subbranch">
+                  <div class="tree-stem tree-stem--up"></div>
+                  <div class="org-card" data-node="cody">
+                    <div class="org-node-avatar" data-node="cody">C</div>
+                    <div>
+                      <div class="org-node-name">Cody</div>
+                      <div class="org-node-role">Code Reviewer</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tree-subbranch">
+                  <div class="tree-stem tree-stem--up"></div>
+                  <div class="org-card" data-node="debbie">
+                    <div class="org-node-avatar" data-node="debbie">D</div>
+                    <div>
+                      <div class="org-node-name">Debbie</div>
+                      <div class="org-node-role">Debugger</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pat branch -->
+          <div class="tree-branch">
+            <div class="tree-stem tree-stem--up"></div>
+            <div class="org-card" data-node="pat">
+              <div class="org-node-avatar" data-node="pat">P</div>
+              <div>
+                <div class="org-node-name">Pat</div>
+                <div class="org-node-role">Data Analyst</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="org-legend" aria-label="Agent colour key">
+        <div class="org-legend-item">
+          <div class="org-legend-dot" style="background:#C8A84B;"></div>
+          <span>Commander</span>
+        </div>
+        <div class="org-legend-item">
+          <div class="org-legend-dot" style="background:#6B8FBF;"></div>
+          <span>Project Management</span>
+        </div>
+        <div class="org-legend-item">
+          <div class="org-legend-dot" style="background:#7BA87A;"></div>
+          <span>Web Build Pipeline</span>
+        </div>
+        <div class="org-legend-item">
+          <div class="org-legend-dot" style="background:#5AA8A0;"></div>
+          <span>Data &amp; Analysis</span>
+        </div>
+        <div class="org-legend-item">
+          <div class="org-legend-dot" style="background:#BF6B8E;"></div>
+          <span>CSS</span>
+        </div>
+        <div class="org-legend-item">
+          <div class="org-legend-dot" style="background:#9B7EC8;"></div>
+          <span>Code Review</span>
+        </div>
+        <div class="org-legend-item">
+          <div class="org-legend-dot" style="background:#C87B5A;"></div>
+          <span>Debug</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
        FOOTER
-       ═══════════════════════════════════════════════════════ -->
+       ══════════════════════════════════════════ -->
   <footer class="site-footer" role="contentinfo">
-    <p class="footer-note">Token counts are illustrative demo data. Real-time token tracking coming soon.</p>
-    <p class="footer-brand">Project Ai · Team Dashboard</p>
+    <p class="footer-note">Token counts are illustrative demo data. Real-time tracking coming soon.</p>
+    <p class="footer-brand">Spec Ops &middot; Team Dashboard</p>
   </footer>
 
 </div><!-- .page-wrapper -->
 
 <script>
-  /* ─────────────────────────────────────────────────────────
+  /* ──────────────────────────────────────────────
      SECURITY: escape helper — applied to all innerHTML
-  ───────────────────────────────────────────────────────── */
+  ────────────────────────────────────────────── */
   function esc(str) {
     return String(str)
       .replace(/&/g,  '&amp;')
@@ -753,9 +1064,9 @@
       .replace(/'/g,  '&#x27;');
   }
 
-  /* ─────────────────────────────────────────────────────────
+  /* ──────────────────────────────────────────────
      HELPERS
-  ───────────────────────────────────────────────────────── */
+  ────────────────────────────────────────────── */
   function fmt(n) {
     return n.toLocaleString('en-AU');
   }
@@ -768,10 +1079,22 @@
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
-  /* ─────────────────────────────────────────────────────────
-     AGENT DATA — same data as original file
-  ───────────────────────────────────────────────────────── */
-  const agents = [
+  /* ──────────────────────────────────────────────
+     AGENT DATA
+  ────────────────────────────────────────────── */
+  var agents = [
+    {
+      id: 'max',
+      name: 'Max',
+      role: 'Mission Commander · Orchestrator',
+      status: 'active',
+      tokens: 4200,
+      tasks: [
+        'Joined the Spec Ops team as lead orchestrator',
+        'Mapped agent hierarchy and command structure',
+        'Routing tasks to the right specialists',
+      ],
+    },
     {
       id: 'daryl',
       name: 'Daryl',
@@ -829,124 +1152,161 @@
         'Generated demo data structure for dashboard',
       ],
     },
+    {
+      id: 'carl',
+      name: 'Carl',
+      role: 'CSS Expert',
+      status: 'idle',
+      tokens: 0,
+      tasks: [
+        'Joined the Spec Ops team',
+        'Standing by for CSS assignments from Steven',
+      ],
+    },
   ];
 
-  /* ─────────────────────────────────────────────────────────
-     POPULATE HEADER DATE
-  ───────────────────────────────────────────────────────── */
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('en-AU', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+  /* ──────────────────────────────────────────────
+     DATE
+  ────────────────────────────────────────────── */
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-AU', {
+    weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
   });
   document.getElementById('date-badge').textContent = dateStr;
 
-  /* ─────────────────────────────────────────────────────────
-     COMPUTE AGGREGATES
-  ───────────────────────────────────────────────────────── */
-  const totalTokens = agents.reduce((s, a) => s + a.tokens, 0);
-  const totalTasks  = agents.reduce((s, a) => s + a.tasks.length, 0);
-  const maxTokens   = Math.max(...agents.map(a => a.tokens));
+  /* ──────────────────────────────────────────────
+     AGGREGATES
+  ────────────────────────────────────────────── */
+  var totalTokens = agents.reduce(function(s, a) { return s + a.tokens; }, 0);
+  var totalTasks  = agents.reduce(function(s, a) { return s + a.tasks.length; }, 0);
+  var maxTokens   = Math.max.apply(null, agents.map(function(a) { return a.tokens; }));
 
   document.getElementById('total-tokens').textContent      = fmt(totalTokens);
   document.getElementById('total-tasks').textContent       = totalTasks;
   document.getElementById('total-agents').textContent      = agents.length;
   document.getElementById('total-agents-meta').textContent = 'Of ' + agents.length + ' available';
 
-  /* ─────────────────────────────────────────────────────────
-     CHECKMARK SVG — injected as inline SVG for colour control
-  ───────────────────────────────────────────────────────── */
-  function checkSVG() {
-    return '<svg class="task-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity="0.3"/><path d="M4.5 7L6.2 8.7L9.5 5.3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  }
-
-  /* ─────────────────────────────────────────────────────────
+  /* ──────────────────────────────────────────────
      BUILD AGENT CARDS
-  ───────────────────────────────────────────────────────── */
-  const grid = document.getElementById('agent-grid');
+  ────────────────────────────────────────────── */
+  var grid = document.getElementById('agent-grid');
 
   agents.forEach(function(agent, index) {
-    const pct = Math.round((agent.tokens / maxTokens) * 100);
+    var pct = agent.tokens > 0 ? Math.round((agent.tokens / maxTokens) * 100) : 0;
 
-    const card = document.createElement('article');
+    var card = document.createElement('article');
     card.className = 'agent-card';
     card.dataset.agent = agent.id;
-    /* Stagger delay stored as data-attr, applied during entrance animation */
-    card.dataset.delay = String(index * 60);
     card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', esc(agent.name) + ', ' + esc(agent.role) + ', status: ' + esc(statusLabel(agent.status)));
+    card.setAttribute('aria-label',
+      esc(agent.name) + ', ' + esc(agent.role) + ', status: ' + esc(statusLabel(agent.status))
+    );
 
-    const taskItems = agent.tasks
+    var taskItems = agent.tasks
       .map(function(t) {
-        return '<li class="task-item">' + checkSVG() + '<span>' + esc(t) + '</span></li>';
+        return '<li class="task-item">'
+          + '<span class="task-marker" aria-hidden="true"></span>'
+          + '<span>' + esc(t) + '</span>'
+          + '</li>';
       })
       .join('');
 
-    card.innerHTML =
-      '<div class="card-header">' +
-        '<div class="agent-avatar" aria-hidden="true">' + esc(initials(agent.name)) + '</div>' +
-        '<div class="agent-info">' +
-          '<div class="agent-name">' + esc(agent.name) + '</div>' +
-          '<div class="agent-role">' + esc(agent.role) + '</div>' +
-        '</div>' +
-        '<span class="status-badge status-badge--' + esc(agent.status) + '" role="status" aria-label="Status: ' + esc(statusLabel(agent.status)) + '">' +
-          '<span class="status-dot" aria-hidden="true"></span>' +
-          esc(statusLabel(agent.status)) +
-        '</span>' +
-      '</div>' +
-      '<div class="card-body">' +
-        '<div class="tasks-section">' +
-          '<div class="card-section-label">Tasks completed today</div>' +
-          '<ul class="task-list" aria-label="Tasks for ' + esc(agent.name) + '">' +
-            taskItems +
-          '</ul>' +
-        '</div>' +
-        '<div class="tokens-section">' +
-          '<div class="card-section-label">Token usage</div>' +
-          '<div class="tokens-top">' +
-            '<span class="tokens-count">' + esc(fmt(agent.tokens)) + '</span>' +
-            '<span class="tokens-label">tokens</span>' +
-            '<span class="tokens-pct">' + esc(String(pct)) + '%</span>' +
-          '</div>' +
-          '<div class="progress-track" role="progressbar" aria-valuenow="' + esc(String(pct)) + '" aria-valuemin="0" aria-valuemax="100" aria-label="Token usage for ' + esc(agent.name) + ': ' + esc(fmt(agent.tokens)) + ' tokens (' + esc(String(pct)) + '%)">' +
-            '<div class="progress-fill" data-pct="' + esc(String(pct)) + '" style="width:0%"></div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
+    var statusClass = 'status-pill--' + esc(agent.status);
+
+    if (agent.id === 'max') {
+      /* Commander layout — two-column */
+      card.innerHTML =
+        '<div class="commander-panel">'
+          + '<div class="commander-initial" aria-hidden="true">' + esc(initials(agent.name)) + '</div>'
+          + '<div class="commander-id-block">'
+            + '<div class="commander-id-label">Mission Commander</div>'
+            + '<div class="commander-id-name">' + esc(agent.name) + '</div>'
+            + '<div class="commander-id-role">' + esc(agent.role) + '</div>'
+          + '</div>'
+        + '</div>'
+        + '<div class="card-body">'
+          + '<div class="tasks-section">'
+            + '<div class="card-section-label">Directives issued</div>'
+            + '<ul class="task-list" aria-label="Tasks for ' + esc(agent.name) + '">'
+              + taskItems
+            + '</ul>'
+          + '</div>'
+          + '<div class="tokens-section">'
+            + '<div class="card-section-label">Token usage</div>'
+            + '<div class="tokens-top">'
+              + '<span class="tokens-count">' + esc(fmt(agent.tokens)) + '</span>'
+              + '<span class="tokens-label">tokens</span>'
+              + '<span class="tokens-pct">' + esc(String(pct)) + '%</span>'
+            + '</div>'
+            + '<div class="progress-track" role="progressbar" aria-valuenow="' + esc(String(pct)) + '" aria-valuemin="0" aria-valuemax="100" aria-label="Token usage for ' + esc(agent.name) + ': ' + esc(fmt(agent.tokens)) + ' tokens (' + esc(String(pct)) + '%)">'
+              + '<div class="progress-fill" data-pct="' + esc(String(pct)) + '" style="width:0%"></div>'
+            + '</div>'
+          + '</div>'
+          + '<span class="status-pill ' + statusClass + '" role="status" aria-label="Status: ' + esc(statusLabel(agent.status)) + '" style="align-self:flex-start;">'
+            + esc(statusLabel(agent.status))
+          + '</span>'
+        + '</div>';
+    } else {
+      /* Standard card layout */
+      card.innerHTML =
+        '<div class="card-header">'
+          + '<div class="agent-avatar" aria-hidden="true">' + esc(initials(agent.name)) + '</div>'
+          + '<div class="agent-info">'
+            + '<div class="agent-name">' + esc(agent.name) + '</div>'
+            + '<div class="agent-role">' + esc(agent.role) + '</div>'
+          + '</div>'
+          + '<span class="status-pill ' + statusClass + '" role="status" aria-label="Status: ' + esc(statusLabel(agent.status)) + '">'
+            + esc(statusLabel(agent.status))
+          + '</span>'
+        + '</div>'
+        + '<div class="card-body">'
+          + '<div class="tasks-section">'
+            + '<div class="card-section-label">Tasks completed today</div>'
+            + '<ul class="task-list" aria-label="Tasks for ' + esc(agent.name) + '">'
+              + taskItems
+            + '</ul>'
+          + '</div>'
+          + '<div class="tokens-section">'
+            + '<div class="card-section-label">Token usage</div>'
+            + '<div class="tokens-top">'
+              + '<span class="tokens-count">' + esc(fmt(agent.tokens)) + '</span>'
+              + '<span class="tokens-label">tokens</span>'
+              + '<span class="tokens-pct">' + esc(String(pct)) + '%</span>'
+            + '</div>'
+            + '<div class="progress-track" role="progressbar" aria-valuenow="' + esc(String(pct)) + '" aria-valuemin="0" aria-valuemax="100" aria-label="Token usage for ' + esc(agent.name) + ': ' + esc(fmt(agent.tokens)) + ' tokens (' + esc(String(pct)) + '%)">'
+              + '<div class="progress-fill" data-pct="' + esc(String(pct)) + '" style="width:0%"></div>'
+            + '</div>'
+          + '</div>'
+        + '</div>';
+    }
 
     grid.appendChild(card);
   });
 
-  /* ─────────────────────────────────────────────────────────
-     ENTRANCE ANIMATION — staggered cards, then progress bars
-     Respects prefers-reduced-motion via CSS
-  ───────────────────────────────────────────────────────── */
-  const cards = Array.from(document.querySelectorAll('.agent-card'));
-
-  /* Check reduced-motion preference */
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ──────────────────────────────────────────────
+     ENTRANCE ANIMATION — staggered, respects reduced-motion
+  ────────────────────────────────────────────── */
+  var cards = Array.from(document.querySelectorAll('.agent-card'));
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (prefersReducedMotion) {
-    /* Skip animation — make all visible immediately */
     cards.forEach(function(card) {
       card.classList.add('is-visible');
       card.style.transition = 'none';
     });
-    /* Animate progress bars immediately */
     document.querySelectorAll('.progress-fill').forEach(function(bar) {
       bar.style.width = bar.dataset.pct + '%';
     });
   } else {
-    /* Stagger card entrance: 60ms per card */
     cards.forEach(function(card, i) {
-      var delay = i * 60;
+      var delay = i * 70;
       setTimeout(function() {
-        card.style.transition = 'opacity 250ms ease-out, transform 250ms ease-out';
+        card.style.transition = 'opacity 280ms ease-out, transform 280ms ease-out';
         card.classList.add('is-visible');
       }, delay);
     });
 
-    /* Progress bars animate after all cards have entered */
-    var lastCardDelay = (cards.length - 1) * 60 + 260;
+    var lastCardDelay = (cards.length - 1) * 70 + 290;
     setTimeout(function() {
       document.querySelectorAll('.progress-fill').forEach(function(bar) {
         bar.style.width = bar.dataset.pct + '%';
