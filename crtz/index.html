@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CORTEIZ RTW — RULES THE WORLD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --bg:        #0c0c0c;
+      --bg-alt:    #111111;
+      --surface:   #181818;
+      --border:    #2a2a2a;
+      --border-hi: #3f3f3f;
+      --white:     #f0ede8;
+      --white-dim: #9a9590;
+      --white-faint: #3d3d3d;
+      --accent:    #f0ede8;
+      --font-disp: 'Bebas Neue', Impact, Arial Black, sans-serif;
+      --font-cond: 'Barlow Condensed', Arial Narrow, sans-serif;
+      --font-mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* ─── GRAIN OVERLAY ──────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+      animation: grain-shift 0.8s steps(1) infinite;
+    }
+    @keyframes grain-shift {
+      0%   { background-position: 0 0; }
+      20%  { background-position: -44px -22px; }
+      40%  { background-position: 22px -44px; }
+      60%  { background-position: -66px 22px; }
+      80%  { background-position: 44px -66px; }
+      100% { background-position: 0 0; }
+    }
+
+    /* ─── SCANLINES ──────────────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 998;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.06) 2px,
+        rgba(0,0,0,0.06) 4px
+      );
+    }
+
+    /* ─── SCROLLBAR ───────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--white-dim); }
+
+    /* ─── SELECTION ─────────────────────────────────────── */
+    ::selection { background: var(--white); color: var(--bg); }
+
+    /* ─── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 52px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-disp);
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      text-decoration: none;
+      cursor: crosshair;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-cond);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.15s;
+      cursor: crosshair;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-cart {
+      font-family: var(--font-cond);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      border: 1px solid var(--border-hi);
+      padding: 6px 14px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-cart:hover {
+      background: var(--white);
+      color: var(--bg);
+    }
+
+    /* ─── MARQUEE ─────────────────────────────────────────── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      padding: 10px 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee-scroll 28s linear infinite;
+    }
+
+    .marquee-track span {
+      font-family: var(--font-cond);
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      padding-right: 48px;
+      white-space: nowrap;
+    }
+
+    .marquee-track span b {
+      color: var(--white);
+      font-weight: 900;
+    }
+
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── HERO ────────────────────────────────────────────── */
+    .hero {
+      min-height: 100dvh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px 40px 60px 28px;
+      border-right: 1px solid var(--border);
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-kicker {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: var(--font-disp);
+      font-size: clamp(80px, 12vw, 160px);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 0;
+    }
+
+    .hero-title .line-offset {
+      display: block;
+      padding-left: 14%;
+      color: var(--white);
+    }
+
+    .hero-title .line-stroke {
+      display: block;
+      -webkit-text-stroke: 1.5px var(--white);
+      color: transparent;
+    }
+
+    .hero-sub {
+      margin-top: 36px;
+      font-family: var(--font-cond);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      max-width: 340px;
+      line-height: 1.8;
+    }
+
+    .hero-cta-row {
+      margin-top: 40px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-family: var(--font-cond);
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--white);
+      border: none;
+      padding: 14px 28px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s, color 0.15s, transform 0.1s;
+      cursor: crosshair;
+    }
+
+    .btn-primary:hover {
+      background: var(--white-dim);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active { transform: translateY(0) scale(0.98); }
+
+    .btn-ghost {
+      font-family: var(--font-cond);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      background: transparent;
+      border: 1px solid var(--border-hi);
+      padding: 13px 28px;
+      text-decoration: none;
+      display: inline-block;
+      transition: color 0.15s, border-color 0.15s;
+      cursor: crosshair;
+    }
+
+    .btn-ghost:hover { color: var(--white); border-color: var(--white); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%) contrast(1.15);
+      transition: transform 6s ease;
+    }
+
+    .hero:hover .hero-img { transform: scale(1.03); }
+
+    .hero-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--bg) 0%, transparent 30%),
+                  linear-gradient(0deg, var(--bg) 0%, transparent 25%);
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 36px;
+      right: 28px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    /* ─── SECTION LABEL ───────────────────────────────────── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      margin-bottom: 40px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--border-hi);
+    }
+
+    /* ─── DROPS SECTION ───────────────────────────────────── */
+    .drops {
+      padding: 80px 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .drops-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 52px;
+    }
+
+    .drops-title {
+      font-family: var(--font-disp);
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: 0.9;
+      color: var(--white);
+    }
+
+    .drops-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-align: right;
+      line-height: 1.9;
+    }
+
+    /* Asymmetric product grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .product-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+      cursor: crosshair;
+    }
+
+    .product-card:first-child {
+      grid-row: 1 / 3;
+    }
+
+    .product-card:nth-child(4) {
+      grid-column: 2 / 4;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%) contrast(1.1);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.04);
+      filter: grayscale(100%) contrast(1.25);
+    }
+
+    .product-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 20px 22px;
+      background: linear-gradient(0deg, rgba(12,12,12,0.92) 0%, transparent 100%);
+      transform: translateY(4px);
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover .product-info { transform: translateY(0); }
+
+    .product-name {
+      font-family: var(--font-cond);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .product-card:first-child .product-name { font-size: 20px; }
+
+    .product-price {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--white-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .product-status {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid var(--border-hi);
+      background: var(--bg);
+      padding: 4px 8px;
+    }
+
+    /* ─── STATEMENT ────────────────────────────────────────── */
+    .statement {
+      padding: 100px 28px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .statement-text {
+      font-family: var(--font-disp);
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 0.92;
+      color: var(--white);
+    }
+
+    .statement-text em {
+      font-style: normal;
+      -webkit-text-stroke: 1px var(--white);
+      color: transparent;
+    }
+
+    .statement-body {
+      border-left: 1px solid var(--border);
+      padding-left: 48px;
+    }
+
+    .statement-body p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 2;
+      color: var(--white-dim);
+      max-width: 420px;
+      margin-bottom: 28px;
+    }
+
+    /* ─── MARQUEE DIVIDER ─────────────────────────────────── */
+    .marquee-divider {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+      overflow: hidden;
+    }
+
+    .marquee-divider .marquee-track span {
+      font-family: var(--font-disp);
+      font-size: 42px;
+      letter-spacing: 0.08em;
+      color: var(--white-faint);
+      padding-right: 60px;
+    }
+
+    .marquee-divider .marquee-track { animation-duration: 20s; }
+
+    /* ─── LOOKBOOK ─────────────────────────────────────────── */
+    .lookbook {
+      padding: 80px 0 80px 28px;
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .lookbook-header {
+      padding-right: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+    }
+
+    .lookbook-title {
+      font-family: var(--font-disp);
+      font-size: clamp(40px, 6vw, 80px);
+      line-height: 0.9;
+      color: var(--white);
+    }
+
+    .lookbook-scroll {
+      display: flex;
+      gap: 1px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      cursor: grab;
+      user-select: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .lookbook-scroll:active { cursor: grabbing; }
+    .lookbook-scroll::-webkit-scrollbar { display: none; }
+
+    .lookbook-item {
+      flex: 0 0 auto;
+      width: 360px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lookbook-item:last-child { margin-right: 28px; }
+
+    .lookbook-item img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%) contrast(1.08);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lookbook-item:hover img { transform: scale(1.03); }
+
+    .lookbook-caption {
+      padding: 14px 0 0;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+    }
+
+    /* ─── ALCATRAZ BAND ────────────────────────────────────── */
+    .alcatraz-band {
+      border-top: 1px solid var(--border);
+      padding: 52px 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .alcatraz-cell {
+      background: var(--bg);
+      padding: 36px 28px;
+    }
+
+    .alcatraz-num {
+      font-family: var(--font-disp);
+      font-size: 56px;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .alcatraz-label {
+      font-family: var(--font-cond);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      display: block;
+    }
+
+    /* ─── NEWSLETTER ────────────────────────────────────────── */
+    .newsletter {
+      border-top: 1px solid var(--border);
+      padding: 80px 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .newsletter-title {
+      font-family: var(--font-disp);
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: 0.9;
+      color: var(--white);
+    }
+
+    .newsletter-sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--white-dim);
+      margin-top: 18px;
+      line-height: 1.8;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border-hi);
+    }
+
+    .form-row input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      padding: 14px 18px;
+    }
+
+    .form-row input::placeholder { color: var(--white-faint); }
+
+    .form-row button {
+      background: var(--white);
+      border: none;
+      color: var(--bg);
+      font-family: var(--font-cond);
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 14px 24px;
+      cursor: crosshair;
+      transition: background 0.15s;
+    }
+
+    .form-row button:hover { background: var(--white-dim); }
+    .form-row button:active { transform: scale(0.98); }
+
+    .form-note {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--white-faint);
+      line-height: 1.7;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 52px 28px 36px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 52px;
+    }
+
+    .footer-brand {
+      font-family: var(--font-disp);
+      font-size: 48px;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .footer-brand-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      line-height: 1.9;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-cond);
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 18px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col ul a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--white-faint);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-col ul a:hover { color: var(--white); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-legal {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-socials a {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-socials a:hover { color: var(--white); }
+
+    /* ─── GLITCH TEXT ────────────────────────────────────────── */
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      letter-spacing: inherit;
+    }
+
+    .glitch::before {
+      color: var(--white);
+      animation: glitch-a 3.2s infinite steps(1);
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    }
+
+    .glitch::after {
+      color: var(--white);
+      animation: glitch-b 3.2s infinite steps(1);
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    }
+
+    @keyframes glitch-a {
+      0%, 96% { transform: translate(0); opacity: 0; }
+      97%      { transform: translate(-3px, 1px); opacity: 0.7; }
+      98%      { transform: translate(3px, -1px); opacity: 0.5; }
+      99%      { transform: translate(-2px, 2px); opacity: 0.8; }
+      100%     { transform: translate(0); opacity: 0; }
+    }
+
+    @keyframes glitch-b {
+      0%, 96% { transform: translate(0); opacity: 0; }
+      97%      { transform: translate(3px, -1px); opacity: 0.6; }
+      98%      { transform: translate(-3px, 1px); opacity: 0.4; }
+      99%      { transform: translate(2px, -2px); opacity: 0.7; }
+      100%     { transform: translate(0); opacity: 0; }
+    }
+
+    /* ─── REVEAL ANIMATION ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── STAGGER DELAYS ─────────────────────────────────────── */
+    .stagger-1 { transition-delay: 0.08s; }
+    .stagger-2 { transition-delay: 0.16s; }
+    .stagger-3 { transition-delay: 0.24s; }
+    .stagger-4 { transition-delay: 0.32s; }
+
+    /* ─── MOBILE ─────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0 16px; }
+
+      .nav-links { display: none; }
+
+      .hero { grid-template-columns: 1fr; min-height: 100dvh; }
+
+      .hero-left { padding: 40px 16px 48px; border-right: none; border-bottom: 1px solid var(--border); }
+
+      .hero-right { height: 50dvh; }
+
+      .hero-title { font-size: clamp(64px, 18vw, 100px); }
+
+      .product-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+
+      .product-card:first-child { grid-row: auto; grid-column: 1 / 3; }
+      .product-card:nth-child(4) { grid-column: 1 / 3; }
+
+      .statement { grid-template-columns: 1fr; gap: 36px; padding: 60px 16px; }
+      .statement-body { border-left: none; border-top: 1px solid var(--border); padding: 28px 0 0; }
+
+      .newsletter { grid-template-columns: 1fr; gap: 36px; padding: 60px 16px; }
+
+      .alcatraz-band { grid-template-columns: 1fr; }
+
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+      .footer-brand-col { grid-column: 1 / 3; }
+
+      .drops { padding: 60px 16px; }
+
+      .lookbook { padding: 60px 0 60px 16px; }
+
+      .lookbook-item { width: 280px; }
+
+      .lookbook-item img { height: 360px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo glitch" data-text="CORTEIZ" href="#">CORTEIZ</a>
+    <ul class="nav-links">
+      <li><a href="#">New Drops</a></li>
+      <li><a href="#">Collections</a></li>
+      <li><a href="#">Look</a></li>
+      <li><a href="#">Archive</a></li>
+      <li><a href="#">World</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="nav-cart" href="#">BAG (0)</a>
+    </div>
+  </nav>
+
+  <!-- TOP MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span><b>NEW DROP</b> — ALCATRAZ SS25 COLLECTION NOW LIVE &nbsp;•&nbsp;</span>
+      <span>CORTEIZ RTW &nbsp;•&nbsp; <b>RULES THE WORLD</b> &nbsp;•&nbsp; EST. MMXVII &nbsp;•&nbsp;</span>
+      <span>FREE SHIPPING ON ALL UK ORDERS OVER £100 &nbsp;•&nbsp;</span>
+      <span><b>CRTZ ALCATRAZ</b> — THE PRISON THAT HOLDS NO ONE &nbsp;•&nbsp;</span>
+      <span><b>NEW DROP</b> — ALCATRAZ SS25 COLLECTION NOW LIVE &nbsp;•&nbsp;</span>
+      <span>CORTEIZ RTW &nbsp;•&nbsp; <b>RULES THE WORLD</b> &nbsp;•&nbsp; EST. MMXVII &nbsp;•&nbsp;</span>
+      <span>FREE SHIPPING ON ALL UK ORDERS OVER £100 &nbsp;•&nbsp;</span>
+      <span><b>CRTZ ALCATRAZ</b> — THE PRISON THAT HOLDS NO ONE &nbsp;•&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-kicker reveal">— SS25 &nbsp;&nbsp; ALCATRAZ COLLECTION</p>
+      <h1 class="hero-title reveal stagger-1">
+        <span>RULES</span>
+        <span class="line-offset">THE</span>
+        <span class="line-stroke">WORLD</span>
+      </h1>
+      <p class="hero-sub reveal stagger-2">
+        The Alcatraz collection. For those who were never meant to be contained.<br />
+        Raw materials. Zero compromises. Rules the world.
+      </p>
+      <div class="hero-cta-row reveal stagger-3">
+        <a class="btn-primary" href="#">Shop Now</a>
+        <a class="btn-ghost" href="#">View Lookbook</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <img
+        class="hero-img"
+        src="https://picsum.photos/seed/crtz-hero-2025/900/1200"
+        alt="CORTEIZ RTW Campaign"
+      />
+      <div class="hero-img-overlay"></div>
+      <span class="hero-badge">© CORTEIZ RTW 2025</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE DIVIDER -->
+  <div class="marquee-divider">
+    <div class="marquee-track" style="animation-direction: reverse;">
+      <span>ALCATRAZ &nbsp;/&nbsp;</span>
+      <span>RULES THE WORLD &nbsp;/&nbsp;</span>
+      <span>CORTEIZ RTW &nbsp;/&nbsp;</span>
+      <span>CRTZ &nbsp;/&nbsp;</span>
+      <span>ALCATRAZ &nbsp;/&nbsp;</span>
+      <span>RULES THE WORLD &nbsp;/&nbsp;</span>
+      <span>CORTEIZ RTW &nbsp;/&nbsp;</span>
+      <span>CRTZ &nbsp;/&nbsp;</span>
+      <span>ALCATRAZ &nbsp;/&nbsp;</span>
+      <span>RULES THE WORLD &nbsp;/&nbsp;</span>
+      <span>CORTEIZ RTW &nbsp;/&nbsp;</span>
+      <span>CRTZ &nbsp;/&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- DROPS -->
+  <section class="drops">
+    <div class="drops-header reveal">
+      <h2 class="drops-title">NEW<br />DROPS</h2>
+      <div class="drops-meta">
+        SS25 — ALCATRAZ<br />
+        04.15.2025<br />
+        — 6 PIECES REMAINING
+      </div>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card reveal">
+        <img src="https://picsum.photos/seed/crtz-jacket/600/900" alt="CRTZ Alcatraz Field Jacket" />
+        <div class="product-info">
+          <div class="product-name">Alcatraz Field Jacket</div>
+          <div class="product-price">£ 285.00</div>
+        </div>
+        <span class="product-status">Limited</span>
+      </div>
+
+      <div class="product-card reveal stagger-1">
+        <img src="https://picsum.photos/seed/crtz-tee-01/600/800" alt="CRTZ RTW Graphic Tee" />
+        <div class="product-info">
+          <div class="product-name">RTW Graphic Tee</div>
+          <div class="product-price">£ 68.00</div>
+        </div>
+        <span class="product-status">New</span>
+      </div>
+
+      <div class="product-card reveal stagger-2">
+        <img src="https://picsum.photos/seed/crtz-cargo/600/800" alt="CRTZ Cargo Jogger" />
+        <div class="product-info">
+          <div class="product-name">Cargo Jogger</div>
+          <div class="product-price">£ 145.00</div>
+        </div>
+        <span class="product-status">New</span>
+      </div>
+
+      <div class="product-card reveal stagger-3">
+        <img src="https://picsum.photos/seed/crtz-hoodie/900/600" alt="CRTZ Alcatraz Hoodie" />
+        <div class="product-info">
+          <div class="product-name">Alcatraz Heavyweight Hoodie</div>
+          <div class="product-price">£ 165.00</div>
+        </div>
+        <span class="product-status">Low Stock</span>
+      </div>
+
+      <div class="product-card reveal stagger-4">
+        <img src="https://picsum.photos/seed/crtz-cap/600/800" alt="CRTZ Six-Panel Cap" />
+        <div class="product-info">
+          <div class="product-name">Six-Panel Cap</div>
+          <div class="product-price">£ 55.00</div>
+        </div>
+        <span class="product-status">Sold Out</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATEMENT -->
+  <section class="statement">
+    <div class="reveal">
+      <h2 class="statement-text">
+        WE DON'T<br />
+        MAKE CLOTHES<br />
+        FOR <em>EVERYONE</em>
+      </h2>
+    </div>
+    <div class="statement-body reveal stagger-2">
+      <p>
+        Corteiz was built in a bedroom. Sold through passwords.
+        It grew through word of mouth, not paid ads.
+        If you know, you know. If you don't, you weren't meant to.
+      </p>
+      <p>
+        The Alcatraz motif isn't decoration — it's a statement.
+        The most notorious prison in history held people who refused
+        to follow the rules the world set for them.
+        We think that's worth wearing.
+      </p>
+      <a class="btn-ghost" href="#">Our Story</a>
+    </div>
+  </section>
+
+  <!-- LOOKBOOK -->
+  <section class="lookbook">
+    <div class="lookbook-header reveal">
+      <h2 class="lookbook-title">SS25<br />LOOK</h2>
+      <div style="padding-right:28px;">
+        <a class="btn-ghost" href="#">View All</a>
+      </div>
+    </div>
+
+    <div class="lookbook-scroll" id="lookbookScroll">
+      <div class="lookbook-item">
+        <img src="https://picsum.photos/seed/crtz-look-01/720/960" alt="Look 01" />
+        <div class="lookbook-caption">Look 01 — Field Jacket / Cargo Jogger</div>
+      </div>
+      <div class="lookbook-item">
+        <img src="https://picsum.photos/seed/crtz-look-02/720/960" alt="Look 02" />
+        <div class="lookbook-caption">Look 02 — Heavyweight Hoodie / Cargos</div>
+      </div>
+      <div class="lookbook-item">
+        <img src="https://picsum.photos/seed/crtz-look-03/720/960" alt="Look 03" />
+        <div class="lookbook-caption">Look 03 — Archive Tee / Jogger</div>
+      </div>
+      <div class="lookbook-item">
+        <img src="https://picsum.photos/seed/crtz-look-04/720/960" alt="Look 04" />
+        <div class="lookbook-caption">Look 04 — RTW Jacket Full Set</div>
+      </div>
+      <div class="lookbook-item">
+        <img src="https://picsum.photos/seed/crtz-look-05/720/960" alt="Look 05" />
+        <div class="lookbook-caption">Look 05 — Alcatraz Capsule</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALCATRAZ STATS BAND -->
+  <div class="alcatraz-band">
+    <div class="alcatraz-cell reveal">
+      <span class="alcatraz-num" data-target="217">000</span>
+      <span class="alcatraz-label">Drops Completed</span>
+    </div>
+    <div class="alcatraz-cell reveal stagger-2">
+      <span class="alcatraz-num" data-target="1847">0000</span>
+      <span class="alcatraz-label">Pieces Released</span>
+    </div>
+    <div class="alcatraz-cell reveal stagger-4">
+      <span class="alcatraz-num" data-target="63">00</span>
+      <span class="alcatraz-label">Countries Reached</span>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="reveal">
+      <h2 class="newsletter-title">GET<br />EARLY<br />ACCESS</h2>
+      <p class="newsletter-sub">
+        Drop alerts. Archive access.<br />No spam. Ever.
+      </p>
+    </div>
+    <div class="newsletter-form reveal stagger-2">
+      <div class="section-label">— Newsletter</div>
+      <div class="form-row">
+        <input type="email" placeholder="Your email address" />
+        <button type="submit">JOIN</button>
+      </div>
+      <p class="form-note">
+        By subscribing you agree to receive communications from CORTEIZ RTW.<br />
+        Unsubscribe at any time. No third-party data sharing.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <div class="footer-brand">CRTZ</div>
+        <div class="footer-brand-sub">
+          CORTEIZ RTW<br />
+          RULES THE WORLD<br />
+          EST. MMXVII — LONDON
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Shop</div>
+        <ul>
+          <li><a href="#">New Drops</a></li>
+          <li><a href="#">Jackets</a></li>
+          <li><a href="#">Hoodies</a></li>
+          <li><a href="#">Tees</a></li>
+          <li><a href="#">Bottoms</a></li>
+          <li><a href="#">Accessories</a></li>
+          <li><a href="#">Archive</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">About</div>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Alcatraz</a></li>
+          <li><a href="#">Lookbook</a></li>
+          <li><a href="#">World</a></li>
+          <li><a href="#">Stockists</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Help</div>
+        <ul>
+          <li><a href="#">Sizing</a></li>
+          <li><a href="#">Delivery</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-legal">© 2025 CORTEIZ RTW. ALL RIGHTS RESERVED.</span>
+      <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="#">X / Twitter</a>
+        <a href="#">TikTok</a>
+        <a href="#">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ─── INTERSECTION OBSERVER REVEALS ─── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ─── DRAG-TO-SCROLL LOOKBOOK ─── */
+    const scroll = document.getElementById('lookbookScroll');
+    let isDown = false, startX, scrollLeft;
+
+    scroll.addEventListener('mousedown', e => {
+      isDown = true;
+      startX = e.pageX - scroll.offsetLeft;
+      scrollLeft = scroll.scrollLeft;
+    });
+
+    scroll.addEventListener('mouseleave', () => { isDown = false; });
+    scroll.addEventListener('mouseup', () => { isDown = false; });
+    scroll.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - scroll.offsetLeft;
+      scroll.scrollLeft = scrollLeft - (x - startX) * 1.4;
+    });
+
+    /* ─── TEXT SCRAMBLE ON HERO TITLE ─── */
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&';
+
+    function scramble(el, finalText, duration = 900) {
+      let frame = 0;
+      const totalFrames = Math.floor(duration / 40);
+      const interval = setInterval(() => {
+        el.textContent = finalText.split('').map((char, i) => {
+          if (char === ' ') return ' ';
+          if (frame / totalFrames > i / finalText.length) return char;
+          return chars[Math.floor(Math.random() * chars.length)];
+        }).join('');
+        frame++;
+        if (frame > totalFrames) {
+          el.textContent = finalText;
+          clearInterval(interval);
+        }
+      }, 40);
+    }
+
+    /* Apply scramble to hero title spans on load */
+    window.addEventListener('load', () => {
+      const titleSpans = document.querySelectorAll('.hero-title span');
+      const words = ['RULES', 'THE', 'WORLD'];
+      titleSpans.forEach((span, i) => {
+        setTimeout(() => {
+          const cls = span.className;
+          scramble(span, words[i], 800);
+          span.className = cls;
+        }, i * 250);
+      });
+    });
+
+    /* ─── COUNTER ANIMATION ─── */
+    function animateCounter(el) {
+      const target = parseInt(el.getAttribute('data-target'));
+      const duration = 1800;
+      const step = target / (duration / 16);
+      let current = 0;
+
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          el.textContent = target.toLocaleString();
+          clearInterval(timer);
+        } else {
+          el.textContent = Math.floor(current).toLocaleString();
+        }
+      }, 16);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-target]').forEach(el => {
+      counterObserver.observe(el);
+    });
+
+    /* ─── KEYBOARD NAV (ESC closes mobile) ─── */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.activeElement.blur();
+    });
+  </script>
+
+</body>
+</html>
