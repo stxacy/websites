@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volm Studio — Interior Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ============================================
+       DESIGN TOKENS
+    ============================================ */
+    :root {
+      --bg:          #f6f3ee;
+      --surface:     #ede9e1;
+      --surface-2:   #e3ddd4;
+      --text:        #1c1815;
+      --text-muted:  #857d74;
+      --accent:      #b05a2f;
+      --accent-warm: #c97a52;
+      --border:      #d5cfc6;
+      --white:       #fdfcfa;
+
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'DM Sans', system-ui, sans-serif;
+      --mono:     'DM Mono', monospace;
+
+      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-snappy: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+      --nav-h: 72px;
+    }
+
+    /* ============================================
+       TYPOGRAPHY SCALE
+    ============================================ */
+    .t-display {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(3.5rem, 7vw, 7rem);
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+    }
+
+    .t-h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2.25rem, 4vw, 3.75rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .t-h3 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+    }
+
+    .t-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .t-body {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 60ch;
+    }
+
+    /* ============================================
+       SCROLL REVEAL
+    ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+    .reveal-delay-3 { transition-delay: 0.36s; }
+    .reveal-delay-4 { transition-delay: 0.5s; }
+
+    /* ============================================
+       NAVIGATION
+    ============================================ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 3rem;
+      transition: background-color 0.5s var(--ease-out), border-color 0.5s;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav.scrolled {
+      background-color: var(--bg);
+      border-bottom-color: var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8125rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      margin-left: 2.5rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.5rem 1.375rem;
+      border-radius: 2rem;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+      transition: all 0.35s var(--ease-out);
+      display: inline-block;
+    }
+
+    .nav-cta:hover {
+      background-color: var(--text);
+      color: var(--white);
+      border-color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    .hero {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      padding: calc(var(--nav-h) + 4rem) 4rem 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 3;
+      max-width: 820px;
+      width: 100%;
+    }
+
+    .hero-index {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: rgba(253, 252, 250, 0.65);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeSlideUp 1s var(--ease-out) 0.2s forwards;
+    }
+
+    .hero-headline {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(4rem, 6.5vw, 7.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeSlideUp 1.1s var(--ease-out) 0.4s forwards;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent-warm);
+    }
+
+    .hero-body {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(253, 252, 250, 0.72);
+      max-width: 42ch;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeSlideUp 1s var(--ease-out) 0.65s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeSlideUp 1s var(--ease-out) 0.85s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      padding: 0.875rem 2rem;
+      border-radius: 2rem;
+      background-color: var(--text);
+      color: var(--white);
+      border: 1px solid var(--text);
+      transition: all 0.35s var(--ease-out);
+      will-change: transform;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-primary svg {
+      transition: transform 0.3s var(--ease-out);
+    }
+
+    .btn-primary:hover svg {
+      transform: translateX(3px);
+    }
+
+    .btn-ghost {
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+    }
+
+    .hero .btn-ghost {
+      color: rgba(253, 252, 250, 0.65);
+    }
+
+    .hero .btn-ghost:hover {
+      color: var(--white);
+    }
+
+    .hero-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+      opacity: 0;
+      animation: heroImgReveal 1.8s var(--ease-out) 0.1s forwards;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(to right,  var(--bg) 0%, transparent 24%, transparent 76%, var(--bg) 100%),
+        linear-gradient(to bottom, rgba(246,243,238,0.75) 0%, transparent 22%, transparent 68%, var(--bg) 100%),
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(28,24,21,0.28) 0%, transparent 70%);
+    }
+
+    .hero-image-caption {
+      position: absolute;
+      bottom: 2rem;
+      right: 2.5rem;
+      z-index: 4;
+      background: rgba(246, 243, 238, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+      padding: 0.875rem 1.25rem;
+      border-radius: 0.5rem;
+    }
+
+    .hero-image-caption .caption-title {
+      font-family: var(--serif);
+      font-size: 0.9375rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-image-caption .caption-sub {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeSlideUp 1s var(--ease-out) 1.4s forwards;
+      z-index: 4;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 3.5rem;
+      background: linear-gradient(to bottom, rgba(253,252,250,0.45), transparent);
+      animation: scrollPulse 2.5s ease-in-out infinite;
+    }
+
+    .hero-scroll-label {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      color: rgba(253, 252, 250, 0.5);
+      writing-mode: vertical-rl;
+    }
+
+    @keyframes fadeSlideUp {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(24px); }
+    }
+
+    @keyframes heroImgReveal {
+      to { opacity: 1; }
+      from { opacity: 0; }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { transform: scaleY(1); opacity: 0.5; }
+      50% { transform: scaleY(0.7); opacity: 1; }
+    }
+
+    /* ============================================
+       SCROLL STORY
+    ============================================ */
+    .scroll-story {
+      height: 300vh;
+      position: relative;
+    }
+
+    .scroll-story-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .story-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+
+    .story-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(to right, rgba(14,11,9,0.85) 0%, rgba(14,11,9,0.55) 32%, rgba(14,11,9,0.08) 58%, transparent 72%),
+        linear-gradient(to bottom, rgba(14,11,9,0.35) 0%, transparent 22%, transparent 75%, rgba(14,11,9,0.5) 100%);
+    }
+
+    .story-panel {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 4.5rem;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .story-panel-inner {
+      max-width: 500px;
+    }
+
+    .story-kicker {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      color: var(--accent-warm);
+      margin-bottom: 1.75rem;
+    }
+
+    .story-heading {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(3rem, 5vw, 5.75rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+
+    .story-heading em {
+      font-style: italic;
+      color: var(--accent-warm);
+    }
+
+    .story-body {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(253, 252, 250, 0.65);
+      max-width: 38ch;
+    }
+
+    .story-progress {
+      position: absolute;
+      right: 3rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      align-items: center;
+    }
+
+    .story-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(253, 252, 250, 0.22);
+      transition: background 0.4s ease, transform 0.4s ease;
+    }
+
+    .story-dot.active {
+      background: var(--accent-warm);
+      transform: scale(1.5);
+    }
+
+    .story-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--accent-warm);
+      z-index: 3;
+      transition: width 0.05s linear;
+    }
+
+    @media (max-width: 768px) {
+      .scroll-story {
+        height: 350vh;
+      }
+
+      .story-panel {
+        padding: 0 1.5rem;
+        align-items: flex-end;
+        padding-bottom: 5.5rem;
+      }
+
+      .story-scrim {
+        background:
+          linear-gradient(to top, rgba(14,11,9,0.88) 0%, rgba(14,11,9,0.5) 45%, transparent 70%),
+          linear-gradient(to bottom, rgba(14,11,9,0.4) 0%, transparent 30%);
+      }
+
+      .story-progress {
+        right: 1.25rem;
+        top: auto;
+        bottom: 2.5rem;
+        transform: none;
+        flex-direction: row;
+      }
+    }
+
+    /* ============================================
+       MARQUEE STRIP
+    ============================================ */
+    .marquee-strip {
+      background-color: var(--text);
+      color: var(--white);
+      padding: 1rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 28s linear infinite;
+    }
+
+    .marquee-item {
+      white-space: nowrap;
+      padding: 0 2.5rem;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.125rem;
+      letter-spacing: 0.01em;
+      opacity: 0.75;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .marquee-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--accent-warm);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ============================================
+       SECTION LAYOUT
+    ============================================ */
+    section {
+      padding: 8rem 3rem;
+    }
+
+    .max-w {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4rem;
+    }
+
+    .section-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .section-link {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s, gap 0.3s var(--ease-out);
+    }
+
+    .section-link:hover {
+      color: var(--text);
+      gap: 0.875rem;
+    }
+
+    /* ============================================
+       SELECTED WORK GRID
+    ============================================ */
+    .work-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.25rem;
+    }
+
+    .work-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.375rem;
+      cursor: pointer;
+    }
+
+    .work-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .work-card:nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
+    .work-card:nth-child(3) { grid-column: 1; grid-row: 2; }
+
+    .work-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-out);
+      will-change: transform;
+    }
+
+    .work-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .work-card:nth-child(1) { aspect-ratio: 16 / 10; }
+    .work-card:nth-child(2) { aspect-ratio: unset; min-height: 520px; }
+    .work-card:nth-child(3) { aspect-ratio: 16 / 9; }
+
+    .work-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28, 24, 21, 0.55) 0%, transparent 55%);
+      transition: opacity 0.4s;
+    }
+
+    .work-card:hover .work-card-overlay {
+      opacity: 0.8;
+    }
+
+    .work-card-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.75rem;
+      transform: translateY(0.5rem);
+      transition: transform 0.4s var(--ease-out);
+    }
+
+    .work-card:hover .work-card-info {
+      transform: translateY(0);
+    }
+
+    .work-card-title {
+      font-family: var(--serif);
+      font-size: 1.375rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.375rem;
+    }
+
+    .work-card-meta {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      color: rgba(253, 252, 250, 0.65);
+    }
+
+    .work-card-tag {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(246, 243, 238, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+      border-radius: 2rem;
+      padding: 0.3125rem 0.875rem;
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      color: rgba(253, 252, 250, 0.85);
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.3s, transform 0.3s var(--ease-out);
+    }
+
+    .work-card:hover .work-card-tag {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .work-more-row {
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .work-count {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background-color: var(--border);
+    }
+
+    /* ============================================
+       PHILOSOPHY SECTION
+    ============================================ */
+    .philosophy {
+      background-color: var(--surface);
+    }
+
+    .philosophy-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .philosophy-quote {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.875rem, 3vw, 3.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    .philosophy-quote em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .philosophy-body {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 52ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .philosophy-sign {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .philosophy-sign-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .philosophy-sign-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .philosophy-sign-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .philosophy-sign-title {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .philosophy-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .philosophy-img {
+      border-radius: 0.375rem;
+      overflow: hidden;
+    }
+
+    .philosophy-img:first-child {
+      grid-column: 1 / 3;
+      aspect-ratio: 16 / 9;
+    }
+
+    .philosophy-img:last-child {
+      grid-column: 2 / 3;
+      aspect-ratio: 4 / 3;
+    }
+
+    .philosophy-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-out);
+    }
+
+    .philosophy-img:hover img {
+      transform: scale(1.04);
+    }
+
+    /* ============================================
+       SERVICES SECTION
+    ============================================ */
+    .services-list {
+      border-top: 1px solid var(--border);
+    }
+
+    .service-item {
+      display: grid;
+      grid-template-columns: 4rem 1fr auto;
+      gap: 2rem;
+      align-items: start;
+      padding: 2.25rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: default;
+      transition: background-color 0.3s;
+    }
+
+    .service-item:hover {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      margin: 0 -1rem;
+    }
+
+    .service-num {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding-top: 0.35rem;
+    }
+
+    .service-name {
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 2vw, 1.875rem);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.625rem;
+      transition: color 0.2s;
+    }
+
+    .service-item:hover .service-name {
+      color: var(--accent);
+    }
+
+    .service-desc {
+      font-size: 0.9375rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-muted);
+      max-width: 55ch;
+    }
+
+    .service-arrow {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.35s var(--ease-out);
+      margin-top: 0.25rem;
+    }
+
+    .service-item:hover .service-arrow {
+      background-color: var(--text);
+      border-color: var(--text);
+      transform: rotate(45deg);
+    }
+
+    .service-item:hover .service-arrow svg {
+      stroke: var(--white);
+    }
+
+    .service-arrow svg {
+      stroke: var(--text-muted);
+      transition: stroke 0.2s;
+    }
+
+    /* ============================================
+       NUMBERS SECTION
+    ============================================ */
+    .numbers-section {
+      padding: 6rem 3rem;
+      background-color: var(--text);
+    }
+
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .number-item {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .number-item:last-child {
+      border-right: none;
+    }
+
+    .number-val {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .number-val sup {
+      font-size: 0.45em;
+      vertical-align: super;
+      color: var(--accent-warm);
+    }
+
+    .number-label {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      color: rgba(253, 252, 250, 0.4);
+    }
+
+    /* ============================================
+       STUDIO / ABOUT SECTION
+    ============================================ */
+    .studio-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: end;
+    }
+
+    .studio-content {
+      padding-bottom: 2rem;
+    }
+
+    .studio-headline {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    .studio-body {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .studio-team {
+      display: flex;
+      align-items: center;
+      gap: -0.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .studio-member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      flex-basis: calc(25% - 0.5rem);
+    }
+
+    .studio-member-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--bg);
+    }
+
+    .studio-member-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .studio-member-name {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .studio-member-role {
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .studio-image-wrap {
+      position: relative;
+      border-radius: 0.375rem;
+      overflow: hidden;
+    }
+
+    .studio-image-wrap img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s var(--ease-out);
+    }
+
+    .studio-image-wrap:hover img {
+      transform: scale(1.03);
+    }
+
+    .studio-img-badge {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: var(--white);
+      padding: 0.875rem 1.25rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 8px 24px -8px rgba(28, 24, 21, 0.15);
+    }
+
+    .studio-img-badge-num {
+      font-family: var(--mono);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .studio-img-badge-label {
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    /* ============================================
+       CONTACT CTA SECTION
+    ============================================ */
+    .cta-section {
+      background-color: var(--surface);
+      padding: 10rem 3rem;
+      text-align: left;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cta-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 4rem;
+    }
+
+    .cta-headline {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(3rem, 6vw, 7rem);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .cta-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .cta-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-muted);
+      margin-top: 1.5rem;
+      max-width: 50ch;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    .cta-email {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer {
+      background-color: var(--text);
+      color: var(--white);
+      padding: 4rem 3rem 3rem;
+    }
+
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-brand-name {
+      font-family: var(--serif);
+      font-size: 1.375rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(253, 252, 250, 0.45);
+      max-width: 30ch;
+    }
+
+    .footer-col-title {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      color: rgba(253, 252, 250, 0.35);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: rgba(253, 252, 250, 0.6);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      color: rgba(253, 252, 250, 0.3);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-socials a {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      color: rgba(253, 252, 250, 0.35);
+      transition: color 0.2s;
+    }
+
+    .footer-socials a:hover {
+      color: rgba(253, 252, 250, 0.7);
+    }
+
+    /* ============================================
+       MOBILE RESPONSIVE
+    ============================================ */
+    @media (max-width: 768px) {
+      .nav {
+        padding: 0 1.5rem;
+      }
+
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+
+      section {
+        padding: 5rem 1.5rem;
+      }
+
+      .hero-content {
+        padding: calc(var(--nav-h) + 3rem) 1.5rem 6rem;
+      }
+
+      .hero-image-caption {
+        bottom: 1.25rem;
+        right: 1.25rem;
+      }
+
+      .hero-scroll {
+        display: none;
+      }
+
+      .work-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+
+      .work-card:nth-child(1),
+      .work-card:nth-child(2),
+      .work-card:nth-child(3) {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      .work-card:nth-child(1),
+      .work-card:nth-child(3) { aspect-ratio: 4 / 3; }
+      .work-card:nth-child(2) { min-height: 280px; }
+
+      .philosophy-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .numbers-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .number-item {
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .number-item:nth-child(even) {
+        border-right: none;
+      }
+
+      .studio-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .cta-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .cta-actions {
+        align-items: flex-start;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">Volm Studio</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#studio">Studio</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Start a Project</a>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" style="padding: 0;">
+    <div class="hero-content">
+      <p class="hero-index">— 01 / INTERIOR ARCHITECTURE</p>
+      <h1 class="hero-headline">
+        Form<br>
+        <em>Follows</em><br>
+        Meaning.
+      </h1>
+      <p class="hero-body">
+        We design spaces that carry weight — where every surface, proportion, and threshold is a considered decision. Architecture as autobiography.
+      </p>
+      <div class="hero-actions">
+        <a href="#work" class="btn-primary">
+          View Selected Work
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+        <a href="#studio" class="btn-ghost">Our Studio</a>
+      </div>
+    </div>
+
+    <video class="hero-video-bg" autoplay muted loop playsinline>
+      <source src="interior_design.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-image-caption">
+      <p class="caption-title">The Olafsen Residence</p>
+      <p class="caption-sub">Oslo, Norway &nbsp;·&nbsp; 2024</p>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span class="hero-scroll-label">Scroll</span>
+    </div>
+  </section>
+
+  <!-- ==================== SCROLL STORY ==================== -->
+  <section class="scroll-story" id="scrollStory">
+    <div class="scroll-story-sticky">
+      <video class="story-video" id="storyVideo" muted playsinline preload="auto">
+        <source src="interior_design_house.mp4" type="video/mp4">
+      </video>
+      <div class="story-scrim"></div>
+
+      <div class="story-panel" id="storyPanel0">
+        <div class="story-panel-inner">
+          <p class="story-kicker">— 01 / Spatial Thinking</p>
+          <h2 class="story-heading">Every room<br>tells a<br><em>story.</em></h2>
+          <p class="story-body">We begin with proportion and light — understanding how a space breathes before a single object is placed.</p>
+        </div>
+      </div>
+
+      <div class="story-panel" id="storyPanel1">
+        <div class="story-panel-inner">
+          <p class="story-kicker">— 02 / Material Craft</p>
+          <h2 class="story-heading">Surface<br>meets<br><em>soul.</em></h2>
+          <p class="story-body">Every texture is chosen for how it ages. Stone, timber, plaster — materials that deepen in character over time.</p>
+        </div>
+      </div>
+
+      <div class="story-panel" id="storyPanel2">
+        <div class="story-panel-inner">
+          <p class="story-kicker">— 03 / Considered Detail</p>
+          <h2 class="story-heading">Detail<br>is the<br><em>design.</em></h2>
+          <p class="story-body">The junction of a threshold, the reveal of a shelf, the shadow of a cornice — this is where architecture becomes art.</p>
+        </div>
+      </div>
+
+      <div class="story-progress">
+        <div class="story-dot active" data-index="0"></div>
+        <div class="story-dot" data-index="1"></div>
+        <div class="story-dot" data-index="2"></div>
+      </div>
+      <div class="story-bar" id="storyBar"></div>
+    </div>
+  </section>
+
+  <!-- ==================== MARQUEE ==================== -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <!-- First copy -->
+      <div class="marquee-item">
+        Selected Works <span class="marquee-dot"></span>
+        2019 — 2025 <span class="marquee-dot"></span>
+        Residential <span class="marquee-dot"></span>
+        Hospitality <span class="marquee-dot"></span>
+        Material Studies <span class="marquee-dot"></span>
+        Spatial Narrative <span class="marquee-dot"></span>
+        Commercial Interiors <span class="marquee-dot"></span>
+        Adaptive Reuse <span class="marquee-dot"></span>
+        Cultural Spaces <span class="marquee-dot"></span>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="marquee-item" aria-hidden="true">
+        Selected Works <span class="marquee-dot"></span>
+        2019 — 2025 <span class="marquee-dot"></span>
+        Residential <span class="marquee-dot"></span>
+        Hospitality <span class="marquee-dot"></span>
+        Material Studies <span class="marquee-dot"></span>
+        Spatial Narrative <span class="marquee-dot"></span>
+        Commercial Interiors <span class="marquee-dot"></span>
+        Adaptive Reuse <span class="marquee-dot"></span>
+        Cultural Spaces <span class="marquee-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SELECTED WORK ==================== -->
+  <section id="work" style="background-color: var(--bg);">
+    <div class="max-w">
+      <div class="section-header reveal">
+        <div class="section-header-left">
+          <span class="t-label">02 — Selected Work</span>
+          <h2 class="t-h2">Spaces that endure.</h2>
+        </div>
+        <a href="#" class="section-link">
+          Full Archive
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="work-grid">
+        <!-- Card 1 -->
+        <div class="work-card reveal reveal-delay-1">
+          <img src="https://picsum.photos/seed/volm-proj1/1200/800" alt="Kessler Penthouse">
+          <div class="work-card-overlay"></div>
+          <span class="work-card-tag">Residential</span>
+          <div class="work-card-info">
+            <h3 class="work-card-title">Kessler Penthouse</h3>
+            <p class="work-card-meta">Copenhagen, Denmark &nbsp;·&nbsp; 2024</p>
+          </div>
+        </div>
+
+        <!-- Card 2 (tall) -->
+        <div class="work-card reveal reveal-delay-2">
+          <img src="https://picsum.photos/seed/volm-proj2-tall/800/1200" alt="Marum Gallery">
+          <div class="work-card-overlay"></div>
+          <span class="work-card-tag">Cultural</span>
+          <div class="work-card-info">
+            <h3 class="work-card-title">Marum Gallery</h3>
+            <p class="work-card-meta">Rotterdam, NL &nbsp;·&nbsp; 2023</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="work-card reveal reveal-delay-3">
+          <img src="https://picsum.photos/seed/volm-proj3/1200/700" alt="Havelock Hotel Bar">
+          <div class="work-card-overlay"></div>
+          <span class="work-card-tag">Hospitality</span>
+          <div class="work-card-info">
+            <h3 class="work-card-title">Havelock Hotel Bar</h3>
+            <p class="work-card-meta">Lisbon, Portugal &nbsp;·&nbsp; 2023</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-more-row reveal">
+        <span class="work-count">Showing 3 of 47 projects</span>
+        <div class="divider-line"></div>
+        <a href="#" class="btn-primary">
+          View All
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PHILOSOPHY ==================== -->
+  <section id="philosophy" class="philosophy">
+    <div class="max-w">
+      <div class="philosophy-inner">
+        <div class="reveal">
+          <span class="t-label" style="margin-bottom: 2rem; display: block;">03 — Our Philosophy</span>
+          <blockquote class="philosophy-quote">
+            "A room is not a container.<br>It is a <em>conversation</em><br>between light and life."
+          </blockquote>
+          <p class="philosophy-body">
+            We believe design is inseparable from the people who inhabit it. Every commission begins with deep listening — understanding how a family moves through a morning, how a founder hosts a meeting, how a guest should feel when they first cross a threshold.
+          </p>
+          <p class="philosophy-body" style="margin-bottom: 2rem;">
+            Material selections are made with patience. We build relationships with craftspeople whose hands leave traces in the work. The result is interiors that accumulate meaning over time rather than demand it immediately.
+          </p>
+          <div class="philosophy-sign">
+            <div class="philosophy-sign-avatar">
+              <img src="https://picsum.photos/seed/volm-director/100/100" alt="Ines Volm">
+            </div>
+            <div>
+              <p class="philosophy-sign-name">Ines Volm-Arnaud</p>
+              <p class="philosophy-sign-title">Founder & Principal Architect</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="philosophy-images reveal reveal-delay-2">
+          <div class="philosophy-img">
+            <img src="https://picsum.photos/seed/volm-phil1/1000/600" alt="Studio work">
+          </div>
+          <div class="philosophy-img">
+            <img src="https://picsum.photos/seed/volm-phil2/600/500" alt="Material study">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== NUMBERS ==================== -->
+  <div class="numbers-section">
+    <div class="max-w">
+      <div class="numbers-grid">
+        <div class="number-item reveal">
+          <p class="number-val">47<sup>+</sup></p>
+          <p class="number-label">Completed Projects</p>
+        </div>
+        <div class="number-item reveal reveal-delay-1">
+          <p class="number-val">14</p>
+          <p class="number-label">Countries</p>
+        </div>
+        <div class="number-item reveal reveal-delay-2">
+          <p class="number-val">6<sup>yrs</sup></p>
+          <p class="number-label">In Practice</p>
+        </div>
+        <div class="number-item reveal reveal-delay-3">
+          <p class="number-val">3</p>
+          <p class="number-label">Design Awards</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SERVICES ==================== -->
+  <section id="services" style="background-color: var(--bg);">
+    <div class="max-w">
+      <div class="section-header reveal">
+        <div class="section-header-left">
+          <span class="t-label">04 — What We Do</span>
+          <h2 class="t-h2">Disciplines.</h2>
+        </div>
+      </div>
+
+      <div class="services-list">
+
+        <div class="service-item reveal">
+          <span class="service-num">01</span>
+          <div>
+            <h3 class="service-name">Residential Architecture</h3>
+            <p class="service-desc">From single-family homes to penthouse renovations — we design dwellings that honour daily ritual and hold the weight of lived experience over generations.</p>
+          </div>
+          <div class="service-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 7h10M8 3l4 4-4 4"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="service-item reveal">
+          <span class="service-num">02</span>
+          <div>
+            <h3 class="service-name">Hospitality &amp; Commercial</h3>
+            <p class="service-desc">Restaurants, hotels, retail flagships, and private clubs — spaces designed to define identity and shape the memory of every visitor who passes through them.</p>
+          </div>
+          <div class="service-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 7h10M8 3l4 4-4 4"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="service-item reveal">
+          <span class="service-num">03</span>
+          <div>
+            <h3 class="service-name">Cultural &amp; Institutional</h3>
+            <p class="service-desc">Galleries, foundations, and arts spaces where the architecture steps back to let the work breathe — while still insisting on a precise material and atmospheric language.</p>
+          </div>
+          <div class="service-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 7h10M8 3l4 4-4 4"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="service-item reveal">
+          <span class="service-num">04</span>
+          <div>
+            <h3 class="service-name">Material &amp; Furniture Consultancy</h3>
+            <p class="service-desc">Procurement, custom fabrication, and material sourcing for existing spaces. We work with stone quarries, textile ateliers, and heritage craftspeople worldwide.</p>
+          </div>
+          <div class="service-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 7h10M8 3l4 4-4 4"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== STUDIO ==================== -->
+  <section id="studio" style="background-color: var(--surface);">
+    <div class="max-w">
+      <div class="studio-inner">
+        <div class="studio-content reveal">
+          <span class="t-label" style="margin-bottom: 2rem; display: block;">05 — The Studio</span>
+          <h2 class="studio-headline">
+            A small practice.<br>
+            Deliberately so.
+          </h2>
+          <p class="studio-body">
+            Volm Studio was founded in 2019 by Ines Volm-Arnaud in Amsterdam. We operate as a tight team of six — architects, an interior designer, and a material researcher. We take on fewer than twelve commissions a year to ensure that every project receives our full attention from brief to handover.
+          </p>
+          <p class="studio-body">
+            Our office is a converted textile warehouse in the Jordaan district. The building itself informs our practice: we believe in adaptive reuse, honest materiality, and the beauty of things that age with grace.
+          </p>
+
+          <div class="studio-team">
+            <div class="studio-member">
+              <div class="studio-member-avatar">
+                <img src="https://picsum.photos/seed/volm-t1/80/80" alt="Ines Volm-Arnaud">
+              </div>
+              <p class="studio-member-name">Ines V-A.</p>
+              <p class="studio-member-role">Principal</p>
+            </div>
+            <div class="studio-member">
+              <div class="studio-member-avatar">
+                <img src="https://picsum.photos/seed/volm-t2/80/80" alt="Roel Dansen">
+              </div>
+              <p class="studio-member-name">Roel D.</p>
+              <p class="studio-member-role">Architect</p>
+            </div>
+            <div class="studio-member">
+              <div class="studio-member-avatar">
+                <img src="https://picsum.photos/seed/volm-t3/80/80" alt="Celia Martz">
+              </div>
+              <p class="studio-member-name">Celia M.</p>
+              <p class="studio-member-role">Interior</p>
+            </div>
+            <div class="studio-member">
+              <div class="studio-member-avatar">
+                <img src="https://picsum.photos/seed/volm-t4/80/80" alt="Bruno Haas">
+              </div>
+              <p class="studio-member-name">Bruno H.</p>
+              <p class="studio-member-role">Materials</p>
+            </div>
+          </div>
+
+          <a href="#" class="btn-primary" style="align-self: flex-start; display: inline-flex;">
+            Studio Profile
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 7h10M8 3l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="studio-image-wrap reveal reveal-delay-2">
+          <img src="https://picsum.photos/seed/volm-studio-main/900/1200" alt="Volm Studio office Amsterdam">
+          <div class="studio-img-badge">
+            <p class="studio-img-badge-num">2019</p>
+            <p class="studio-img-badge-label">Est. Amsterdam</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT CTA ==================== -->
+  <section id="contact" class="cta-section">
+    <div class="cta-inner">
+      <div class="reveal">
+        <span class="t-label" style="margin-bottom: 2rem; display: block;">06 — New Enquiries</span>
+        <h2 class="cta-headline">
+          Let's build<br>
+          <em>something</em><br>
+          lasting.
+        </h2>
+        <p class="cta-sub">
+          We accept a limited number of new commissions each year. If your project aligns with our practice, we'd welcome a conversation.
+        </p>
+      </div>
+      <div class="cta-actions reveal reveal-delay-2">
+        <p class="cta-email">studio@volm.studio</p>
+        <a href="mailto:studio@volm.studio" class="btn-primary">
+          Send Enquiry
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+        <a href="#" class="btn-ghost" style="color: var(--text-muted);">Download Studio PDF</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <p class="footer-brand-name">Volm Studio</p>
+        <p class="footer-brand-desc">Interior architecture and material design. Amsterdam, founded 2019.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Navigation</p>
+        <ul class="footer-links">
+          <li><a href="#work">Selected Work</a></li>
+          <li><a href="#philosophy">Philosophy</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#studio">Studio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Contact</p>
+        <ul class="footer-links">
+          <li><a href="mailto:studio@volm.studio">studio@volm.studio</a></li>
+          <li><a href="#">+31 (0)20 847 1928</a></li>
+          <li><a href="#">Prinsengracht 412<br>1016 JB Amsterdam<br>Netherlands</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Volm Studio B.V. All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Archello</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // Nav scroll behaviour
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Scroll reveal — Intersection Observer
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // Magnetic button effect on primary CTAs
+    const magneticEls = document.querySelectorAll('.btn-primary, .nav-cta');
+    magneticEls.forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) * 0.25;
+        const dy = (e.clientY - cy) * 0.25;
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+        el.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s, color 0.35s, border-color 0.35s';
+      });
+      el.addEventListener('mouseenter', () => {
+        el.style.transition = 'transform 0.15s ease, background-color 0.35s, color 0.35s, border-color 0.35s';
+      });
+    });
+
+    // Work card — parallax tilt on hover
+    const workCards = document.querySelectorAll('.work-card');
+    workCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(800px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
+        card.style.transition = 'transform 0.1s ease';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+      });
+    });
+
+    // Service items — hover indent animation
+    const serviceItems = document.querySelectorAll('.service-item');
+    serviceItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        item.style.transition = 'padding 0.35s cubic-bezier(0.16, 1, 0.3, 1), margin 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+      });
+    });
+
+    // Scroll story — frame-by-frame video scrub + panel crossfade
+    (function () {
+      const section   = document.getElementById('scrollStory');
+      const video     = document.getElementById('storyVideo');
+      const panels    = Array.from(document.querySelectorAll('.story-panel'));
+      const dots      = Array.from(document.querySelectorAll('.story-dot'));
+      const bar       = document.getElementById('storyBar');
+      if (!section || !video) return;
+
+      const PANEL_COUNT = panels.length;
+      const FADE = 0.22; // fraction of each panel's range used for fade in/out
+
+      function tick() {
+        const sectionTop    = section.getBoundingClientRect().top + window.scrollY;
+        const scrollTravel  = section.offsetHeight - window.innerHeight;
+        const scrolled      = window.scrollY - sectionTop;
+        const progress      = Math.max(0, Math.min(1, scrolled / scrollTravel));
+
+        // Scrub video frame-by-frame
+        if (video.readyState >= 2 && video.duration) {
+          video.currentTime = progress * video.duration;
+        }
+
+        // Progress bar
+        bar.style.width = (progress * 100) + '%';
+
+        // Panel opacity: each panel owns 1/PANEL_COUNT of the scroll range
+        panels.forEach((panel, i) => {
+          const start = i / PANEL_COUNT;
+          const end   = (i + 1) / PANEL_COUNT;
+
+          if (progress < start || progress > end) {
+            // outside this panel's window — keep last panel visible at tail
+            panel.style.opacity = (i === PANEL_COUNT - 1 && progress >= 1) ? 1 : 0;
+            return;
+          }
+
+          const rel = (progress - start) / (end - start); // 0→1 within this panel
+          let opacity;
+          if (rel < FADE) {
+            opacity = rel / FADE;                          // fade in
+          } else if (rel > 1 - FADE && i < PANEL_COUNT - 1) {
+            opacity = (1 - rel) / FADE;                   // fade out (not last)
+          } else {
+            opacity = 1;
+          }
+          panel.style.opacity = opacity;
+        });
+
+        // Active dot
+        const activeIdx = Math.min(PANEL_COUNT - 1, Math.floor(progress * PANEL_COUNT));
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIdx));
+      }
+
+      window.addEventListener('scroll', tick, { passive: true });
+      video.addEventListener('loadedmetadata', tick);
+      tick(); // run once on load in case already scrolled
+    })();
+  </script>
+
+</body>
+</html>
